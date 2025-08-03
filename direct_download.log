@@ -1,0 +1,13 @@
+2025-02-26 17:43:08,193 - DFA-DirectDownloader - WARNING - Unknown dataset key: 1
+2025-02-26 17:43:08,193 - DFA-DirectDownloader - ERROR - No valid dataset keys provided. Exiting.
+2025-02-26 17:43:41,858 - DFA-DirectDownloader - WARNING - Unknown dataset key: Celeb-DF
+2025-02-26 17:43:41,858 - DFA-DirectDownloader - WARNING - Unknown dataset key: Sample
+2025-02-26 17:43:41,858 - DFA-DirectDownloader - INFO - Processing FaceForensics++ Sample (~30 MB)
+2025-02-26 17:44:49,393 - DFA-DirectDownloader - INFO - Cleaning up temporary files
+2025-02-26 17:44:49,415 - DFA-DirectDownloader - INFO - Successfully prepared FaceForensics++ Sample
+2025-02-26 17:44:49,415 - DFA-DirectDownloader - INFO - Processing Celeb-DF Sample (~15 MB)
+2025-02-26 17:45:08,521 - DFA-DirectDownloader - INFO - Cleaning up temporary files
+2025-02-26 17:45:08,526 - DFA-DirectDownloader - INFO - Successfully prepared Celeb-DF Sample
+2025-02-26 17:45:08,526 - DFA-DirectDownloader - INFO - Processing DFDC Sample (~50 MB)
+2025-02-26 17:45:09,791 - DFA-DirectDownloader - ERROR - Error downloading https://github.com/dfdc/deepfake-challenge-sample/archive/refs/heads/main.zip: 404 Client Error: Not Found for url: https://github.com/dfdc/deepfake-challenge-sample/archive/refs/heads/main.zip
+2025-02-26 17:45:09,791 - DFA-DirectDownloader - INFO - Downloaded 2/3 datasets
