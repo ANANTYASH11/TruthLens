@@ -900,6 +900,121 @@ button { font-family: inherit; }
   animation: breathe 4s ease-in-out infinite;
 }
 
+/* ============================================================
+   FUTURISTIC HOLOGRAPHIC SHOWCASE (Arthean / PYTIA Design Aesthetics)
+   ============================================================ */
+
+@keyframes ringSlowRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes ringCounterRotate {
+  0% { transform: rotate(360deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
+}
+
+@keyframes floatReverse {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(8px) rotate(-1deg); }
+}
+
+@keyframes glowPulseCosmic {
+  0%, 100% { 
+    filter: drop-shadow(0 0 16px rgba(0, 242, 254, 0.35)) drop-shadow(0 0 45px rgba(168, 85, 247, 0.2));
+  }
+  50% { 
+    filter: drop-shadow(0 0 28px rgba(0, 242, 254, 0.6)) drop-shadow(0 0 70px rgba(168, 85, 247, 0.35));
+  }
+}
+
+@keyframes laserSweep {
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+.ts-futuristic-card {
+  background: linear-gradient(145deg, rgba(16, 20, 36, 0.92) 0%, rgba(9, 11, 20, 0.96) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.65), 
+              0 0 40px rgba(124, 58, 237, 0.12),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 28px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ts-glass-pill {
+  background: rgba(18, 22, 38, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition: all 0.25s ease;
+}
+.ts-glass-pill:hover {
+  transform: translateY(-2px) scale(1.02);
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: 0 12px 30px rgba(0, 242, 254, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.ts-mode-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+.ts-mode-dot.active {
+  width: 24px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #00f2fe 0%, #a855f7 100%);
+  box-shadow: 0 0 12px rgba(0, 242, 254, 0.6);
+}
+
+.ts-cyber-btn {
+  background: linear-gradient(135deg, #00f2fe 0%, #3b82f6 50%, #7c3aed 100%);
+  color: #ffffff;
+  border: none;
+  font-weight: 700;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(0, 242, 254, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+}
+.ts-cyber-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(124, 58, 237, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+}
+
+.ts-cyber-btn-outline {
+  background: rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ts-cyber-btn-outline:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(56, 189, 248, 0.4);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
 /* ── Reduced Motion ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
