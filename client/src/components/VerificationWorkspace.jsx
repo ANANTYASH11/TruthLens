@@ -1,346 +1,385 @@
 import React, { useState, useRef } from 'react';
 import { 
   FileText, Video, Image, Mic, Link2, Upload, Globe, 
-  ArrowRight, X, AlertCircle, CheckCircle2, Trash2, ShieldCheck, Sparkles
+  ArrowRight, X, AlertCircle, CheckCircle2, Trash2, ShieldCheck, Sparkles,
+  Layers, ScanLine, Play
 } from 'lucide-react';
 
-const INPUT_MODES = [
-  { id: 'text', label: 'News / Text', icon: FileText },
-  { id: 'image', label: 'Image', icon: Image },
-  { id: 'video', label: 'Video', icon: Video },
-  { id: 'audio', label: 'Audio', icon: Mic },
-  { id: 'url', label: 'URL', icon: Link2 },
+const WORKSPACE_MODES = [
+  { id: 'multimodal', label: 'Multimodal Dual-Scan', desc: 'Media + Regional Headline', icon: Layers, badge: 'Recommended' },
+  { id: 'text', label: 'Regional Claim / URL', desc: 'Text Misinformation & Phishing', icon: FileText },
+  { id: 'video', label: 'Media Forensics', desc: 'Deepfake & Voice Clone Detection', icon: Video },
 ];
 
-const LANGUAGES = [
-  { code: 'auto', name: 'Auto-Detect', native: '' },
-  { code: 'en', name: 'English', native: 'English' },
-  { code: 'hi', name: 'Hindi', native: 'हिन्दी' },
-  { code: 'bn', name: 'Bengali', native: 'বাংলা' },
-  { code: 'ta', name: 'Tamil', native: 'தமிழ்' },
-  { code: 'te', name: 'Telugu', native: 'తెలుగు' },
-  { code: 'mr', name: 'Marathi', native: 'मराठी' },
-  { code: 'gu', name: 'Gujarati', native: 'ગુજરાતી' },
-  { code: 'kn', name: 'Kannada', native: 'ಕನ್ನಡ' },
-  { code: 'ml', name: 'Malayalam', native: 'മലയാളം' },
-  { code: 'pa', name: 'Punjabi', native: 'ਪੰਜਾਬੀ' },
-  { code: 'ur', name: 'Urdu', native: 'اردو' },
-  { code: 'es', name: 'Spanish', native: 'Español' },
-  { code: 'fr', name: 'French', native: 'Français' },
-  { code: 'de', name: 'German', native: 'Deutsch' },
-  { code: 'ar', name: 'Arabic', native: 'العربية' },
-];
-
-const SAMPLE_PRESETS = [
-  { 
-    label: '🇮🇳 Hindi Banking Rumor',
-    text: 'बड़ी खबर! सनसनीखेज खुलासा: सावधान रहें! तुरंत शेयर करें, बैंक खाते बंद होने वाले हैं!',
-    lang: 'hi', type: 'text',
+const PRESET_CASES = [
+  {
+    id: 'demo-hindi-banking',
+    title: '🇮🇳 Hindi Banking Panic Forward (हिन्दी)',
+    text: 'बड़ी खबर! सनसनीखेज खुलासा: सावधान रहें! तुरंत शेयर करें, बैंक खाते बंद होने वाले हैं! 100% गुप्त जानकारी! आरबीआई ने दिया आदेश। ⚠️⚠️‼️',
+    lang: 'hi',
+    langName: 'Hindi (हिन्दी)',
+    type: 'multimodal',
+    fileName: 'demo_banking_rumor.mp4'
   },
   {
-    label: '🇮🇳 Tamil Medical Hoax',
-    text: 'அதிர்ச்சி தகவல்! 100% கேன்சர் குணமாகும் ரகசிய மூலிகை கண்டுபிடிக்கப்பட்டது!',
-    lang: 'ta', type: 'text',
+    id: 'demo-punjabi-evm',
+    title: '🇮🇳 Punjabi Election Tampering Clip (ਪੰਜਾਬੀ)',
+    text: 'ਵਾਇਰਲ ਵੀਡੀਓ: ਚੋਣਾਂ ਵਿੱਚ ਈਵੀਐਮ ਨਾਲ ਛੇੜਛਾੜ ਦਾ ਵੱਡਾ ਖੁਲਾਸਾ! ਤੁਰੰਤ ਸ਼ੇਅਰ ਕਰੋ! ਸੱਚ ਸਾਹਮਣੇ ਆ ਗਿਆ। ⚠️',
+    lang: 'pa',
+    langName: 'Punjabi (ਪੰਜਾਬੀ)',
+    type: 'multimodal',
+    fileName: 'demo_punjabi_evm.mp4'
   },
   {
-    label: '🎬 English Deepfake Claim',
-    text: 'Breaking: Shocking leaked video of CEO resignation. Share before it gets deleted!',
-    lang: 'en', type: 'video',
+    id: 'demo-tamil-herbal',
+    title: '🇮🇳 Tamil Miracle Herbal Cure (தமிழ்)',
+    text: 'அதிர்ச்சி தகவல்! உடனே ஷேர் பண்ணுங்க! 100% கேன்சர் குணமாகும் ரகசிய மூலிகை கண்டுபிடிக்கப்பட்டது! பிரேக்கிங் நியூஸ்! ⚠️',
+    lang: 'ta',
+    langName: 'Tamil (தமிழ்)',
+    type: 'text',
+    fileName: ''
   },
+  {
+    id: 'demo-bengali-phish',
+    title: '🇮🇳 Bengali Bank Double Scheme (বাংলা)',
+    text: 'চাঞ্চল্যকর তথ্য! অবশ্যই শেয়ার করুন! আজ রাত ১২টার মধ্যে দ্বিগুণ টাকা পান, এই গোপন লিঙ্কে ক্লিক করুন! ব্রেকিং নিউজ! ‼️',
+    lang: 'bn',
+    langName: 'Bengali (বাংলা)',
+    type: 'text',
+    fileName: ''
+  },
+  {
+    id: 'demo-english-deepfake',
+    title: '🎬 Executive Face-Swap Deepfake (English)',
+    text: 'Breaking News: Shocking leaked video reveals secret CEO resignation and emergency liquidation! Share before deleted! ⚠️',
+    lang: 'en',
+    langName: 'English',
+    type: 'video',
+    fileName: 'demo_executive_deepfake.mp4'
+  }
 ];
 
 export default function VerificationWorkspace({ onStartAnalysis }) {
-  const [mode, setMode] = useState('text');
-  const [textInput, setTextInput] = useState('');
+  const [workspaceMode, setWorkspaceMode] = useState('multimodal');
+  const [claimText, setClaimText] = useState('');
   const [urlInput, setUrlInput] = useState('');
-  const [selectedLang, setSelectedLang] = useState('auto');
-  const [fileName, setFileName] = useState('');
+  const [uploadedFile, setUploadedFile] = useState(null);
+  const [detectedLang, setDetectedLang] = useState({ code: 'en', name: 'English', script: 'Latin' });
   const [isDragging, setIsDragging] = useState(false);
-  const fileRef = useRef(null);
+  const fileInputRef = useRef(null);
 
-  const handleSubmit = () => {
-    onStartAnalysis({
-      type: mode,
-      text: textInput,
-      url: urlInput,
-      language: selectedLang,
-      file: fileName,
-    });
+  // Auto-detect script on text change
+  const handleTextChange = (e) => {
+    const text = e.target.value;
+    setClaimText(text);
+
+    for (let char of text) {
+      const code = char.charCodeAt(0);
+      if (code >= 0x0900 && code <= 0x097F) { setDetectedLang({ code: 'hi', name: 'Hindi', script: 'Devanagari' }); return; }
+      if (code >= 0x0A00 && code <= 0x0A7F) { setDetectedLang({ code: 'pa', name: 'Punjabi', script: 'Gurmukhi' }); return; }
+      if (code >= 0x0B80 && code <= 0x0BFF) { setDetectedLang({ code: 'ta', name: 'Tamil', script: 'Tamil' }); return; }
+      if (code >= 0x0980 && code <= 0x09FF) { setDetectedLang({ code: 'bn', name: 'Bengali', script: 'Bengali' }); return; }
+      if (code >= 0x0C00 && code <= 0x0C7F) { setDetectedLang({ code: 'te', name: 'Telugu', script: 'Telugu' }); return; }
+      if (code >= 0x0C80 && code <= 0x0CFF) { setDetectedLang({ code: 'kn', name: 'Kannada', script: 'Kannada' }); return; }
+      if (code >= 0x0D00 && code <= 0x0D7F) { setDetectedLang({ code: 'ml', name: 'Malayalam', script: 'Malayalam' }); return; }
+      if (code >= 0x0600 && code <= 0x06FF) { setDetectedLang({ code: 'ur', name: 'Urdu', script: 'Nastaliq' }); return; }
+    }
+    setDetectedLang({ code: 'en', name: 'English', script: 'Latin' });
   };
 
-  const loadPreset = (preset) => {
-    setTextInput(preset.text);
-    setSelectedLang(preset.lang);
-    setMode(preset.type);
+  const handleSelectPreset = (preset) => {
+    setWorkspaceMode(preset.type);
+    setClaimText(preset.text);
+    if (preset.fileName) {
+      setUploadedFile({ name: preset.fileName, size: '24.2 MB' });
+    } else {
+      setUploadedFile(null);
+    }
+    setDetectedLang({ code: preset.lang, name: preset.langName, script: 'Regional Script' });
   };
 
   const handleDrop = (e) => {
     e.preventDefault();
     setIsDragging(false);
     const file = e.dataTransfer?.files?.[0];
-    if (file) setFileName(file.name);
+    if (file) {
+      setUploadedFile({ name: file.name, size: `${(file.size / (1024 * 1024)).toFixed(1)} MB` });
+    }
   };
 
-  const isReady = mode === 'url' 
-    ? urlInput.trim().length > 0 
-    : (mode === 'text' ? textInput.trim().length > 0 : fileName.length > 0);
+  const handleFileSelect = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setUploadedFile({ name: file.name, size: `${(file.size / (1024 * 1024)).toFixed(1)} MB` });
+    }
+  };
+
+  const handleStartScan = () => {
+    onStartAnalysis({
+      mode: workspaceMode,
+      text: claimText,
+      url: urlInput,
+      file: uploadedFile?.name || 'demo_sample.mp4',
+      language: detectedLang.code
+    });
+  };
+
+  const canSubmit = workspaceMode === 'multimodal'
+    ? (claimText.trim().length > 0 || uploadedFile !== null)
+    : (workspaceMode === 'text' ? (claimText.trim().length > 0 || urlInput.trim().length > 0) : uploadedFile !== null);
 
   return (
-    <div className="anim-fade-in-up" style={{ maxWidth: '900px', margin: '0 auto', padding: '48px 24px' }}>
+    <div className="anim-fade-in-up" style={{ maxWidth: '960px', margin: '0 auto', padding: '40px 24px' }}>
       
       {/* Header */}
       <div style={{ marginBottom: '32px' }}>
-        <h1 className="ts-section-title" style={{ fontSize: '24px', marginBottom: '6px' }}>
-          Verify Content
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+          <div style={{
+            width: '28px', height: '28px', borderRadius: 'var(--radius-md)',
+            background: 'var(--accent-gradient)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            color: '#fff'
+          }}>
+            <ScanLine size={16} />
+          </div>
+          <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
+            Forensic Investigation Intake
+          </span>
+        </div>
+        <h1 className="ts-section-title" style={{ fontSize: '30px', marginBottom: '8px' }}>
+          TruthLens Verification Workspace
         </h1>
-        <p className="ts-section-subtitle">
-          Submit text, images, video, audio, or a URL for multi-stage forensic analysis.
+        <p className="ts-section-subtitle" style={{ maxWidth: '720px' }}>
+          Submit video, imagery, or suspicious news claims in English or Indian regional languages 
+          for multimodal forensic verification and fact-check vector matching.
         </p>
       </div>
 
-      {/* ── Mode Tabs (Pill style) ── */}
-      <div style={{ 
-        display: 'flex', gap: '4px', marginBottom: '24px',
-        background: 'var(--bg-inset)', padding: '4px',
-        borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-default)',
-        width: 'fit-content',
-      }}>
-        {INPUT_MODES.map(m => {
+      {/* Mode Selector Cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px', marginBottom: '28px' }}>
+        {WORKSPACE_MODES.map(m => {
           const Icon = m.icon;
-          const isActive = mode === m.id;
+          const isActive = workspaceMode === m.id;
           return (
             <button
               key={m.id}
-              onClick={() => setMode(m.id)}
+              onClick={() => setWorkspaceMode(m.id)}
+              className="ts-card ts-card-interactive"
               style={{
-                padding: '8px 16px',
-                fontSize: '13px',
-                fontWeight: isActive ? '600' : '500',
-                color: isActive ? '#fff' : 'var(--text-secondary)',
-                background: isActive ? 'var(--accent-gradient)' : 'transparent',
-                border: 'none',
-                borderRadius: 'var(--radius-md)',
-                cursor: 'pointer',
-                display: 'flex', alignItems: 'center', gap: '6px',
-                transition: 'all var(--transition-fast)',
-                boxShadow: isActive ? 'var(--glow-accent)' : 'none',
+                padding: '18px 20px',
+                textAlign: 'left',
+                border: isActive ? '2px solid var(--accent)' : '1px solid var(--border-default)',
+                background: isActive ? 'var(--accent-gradient-subtle)' : 'var(--bg-surface)',
+                position: 'relative'
               }}
             >
-              <Icon size={15} />
-              <span>{m.label}</span>
+              {m.badge && (
+                <span style={{
+                  position: 'absolute', top: '12px', right: '12px',
+                  fontSize: '10px', fontWeight: '700', color: 'var(--accent)',
+                  background: 'var(--bg-surface)', padding: '2px 8px', borderRadius: 'var(--radius-full)',
+                  border: '1px solid var(--accent-border)'
+                }}>
+                  {m.badge}
+                </span>
+              )}
+              <div style={{
+                width: '36px', height: '36px', borderRadius: 'var(--radius-md)',
+                background: isActive ? 'var(--accent)' : 'var(--bg-inset)',
+                color: isActive ? '#fff' : 'var(--accent)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                marginBottom: '12px'
+              }}>
+                <Icon size={18} />
+              </div>
+              <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)', marginBottom: '4px' }}>
+                {m.label}
+              </div>
+              <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+                {m.desc}
+              </div>
             </button>
           );
         })}
       </div>
 
-      {/* ── Input Area ── */}
-      <div className="ts-card" style={{ 
-        padding: '24px', marginBottom: '20px',
-        position: 'relative', overflow: 'hidden',
-      }}>
-        {/* Gradient top accent */}
-        <div style={{
-          position: 'absolute', top: 0, left: 0, right: 0, height: '2px',
-          background: 'var(--accent-gradient)',
-        }} />
-
-        {/* Text Input */}
-        {mode === 'text' && (
-          <div>
-            <label className="ts-label" htmlFor="text-input">Content to Verify</label>
-            <textarea
-              id="text-input"
-              className="ts-input ts-textarea"
-              placeholder="Paste the news article, social media post, or claim you want to verify..."
-              value={textInput}
-              onChange={e => setTextInput(e.target.value)}
-              style={{ minHeight: '180px' }}
-            />
-            <div style={{ 
-              marginTop: '8px', fontSize: '12px', color: 'var(--text-muted)',
-              display: 'flex', justifyContent: 'space-between',
-            }}>
-              <span>Supports 15+ languages including Hindi, Tamil, Bengali, Arabic</span>
-              <span style={{ fontFamily: 'var(--font-mono)' }}>{textInput.length} chars</span>
+      {/* Main Input Form */}
+      <div className="ts-card" style={{ padding: '28px', marginBottom: '28px' }}>
+        
+        {/* Multimodal & Media: Drag and Drop Upload */}
+        {(workspaceMode === 'multimodal' || workspaceMode === 'video') && (
+          <div style={{ marginBottom: '24px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+              <label style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text-primary)' }}>
+                Visual Media Ingest (Video or Image)
+              </label>
+              <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                Supported: MP4, WEBM, AVI, JPG, PNG
+              </span>
             </div>
-          </div>
-        )}
 
-        {/* URL Input */}
-        {mode === 'url' && (
-          <div>
-            <label className="ts-label" htmlFor="url-input">Article URL</label>
-            <div style={{ display: 'flex', gap: '8px' }}>
-              <input
-                id="url-input"
-                className="ts-input"
-                type="url"
-                placeholder="https://example.com/news-article"
-                value={urlInput}
-                onChange={e => setUrlInput(e.target.value)}
-              />
-            </div>
-            <p style={{ marginTop: '8px', fontSize: '12px', color: 'var(--text-muted)' }}>
-              We'll extract and analyze the article content automatically.
-            </p>
-          </div>
-        )}
-
-        {/* File Upload (Image / Video / Audio) */}
-        {(mode === 'image' || mode === 'video' || mode === 'audio') && (
-          <div>
-            <label className="ts-label">
-              Upload {mode === 'image' ? 'Image' : mode === 'video' ? 'Video' : 'Audio'} File
-            </label>
-            
             <div
-              onDragOver={e => { e.preventDefault(); setIsDragging(true); }}
+              onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
               onDragLeave={() => setIsDragging(false)}
               onDrop={handleDrop}
-              onClick={() => fileRef.current?.click()}
+              onClick={() => fileInputRef.current?.click()}
               style={{
-                border: isDragging ? '2px solid var(--accent)' : '2px dashed var(--border-strong)',
-                borderRadius: 'var(--radius-xl)',
-                padding: '48px 24px',
+                border: isDragging ? '2px dashed var(--accent)' : '2px dashed var(--border-default)',
+                borderRadius: 'var(--radius-lg)',
+                padding: '36px 20px',
                 textAlign: 'center',
+                background: isDragging ? 'var(--accent-gradient-subtle)' : 'var(--bg-inset)',
                 cursor: 'pointer',
-                background: isDragging ? 'var(--accent-light)' : 'var(--bg-inset)',
-                transition: 'all var(--transition-base)',
-                boxShadow: isDragging ? 'var(--glow-accent)' : 'none',
-                ...(isDragging ? {} : {
-                  backgroundImage: `repeating-linear-gradient(
-                    0deg, var(--border-default), var(--border-default) 8px, transparent 8px, transparent 16px
-                  )`,
-                  backgroundSize: '1px 100%',
-                  backgroundPosition: '0 0, 100% 0',
-                  backgroundRepeat: 'no-repeat',
-                }),
+                transition: 'all var(--transition-base)'
               }}
             >
-              <Upload size={32} style={{ color: isDragging ? 'var(--accent)' : 'var(--text-muted)', marginBottom: '12px' }} />
-              {fileName ? (
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-                    <CheckCircle2 size={16} style={{ color: 'var(--verified)' }} />
-                    <span style={{ fontSize: '14px', fontWeight: '600', color: 'var(--text-primary)' }}>{fileName}</span>
-                    <button
-                      onClick={(e) => { e.stopPropagation(); setFileName(''); }}
-                      className="ts-btn ts-btn-ghost ts-btn-sm"
-                    >
-                      <X size={14} />
-                    </button>
+              <input 
+                type="file" 
+                ref={fileInputRef} 
+                onChange={handleFileSelect} 
+                style={{ display: 'none' }} 
+                accept="video/*,image/*"
+              />
+              
+              {uploadedFile ? (
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', background: 'var(--bg-surface)', padding: '10px 20px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-default)' }}>
+                  <Video size={20} style={{ color: 'var(--accent)' }} />
+                  <div style={{ textAlign: 'left' }}>
+                    <div style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text-primary)' }}>{uploadedFile.name}</div>
+                    <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{uploadedFile.size} • Ready for frame extraction</div>
                   </div>
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); setUploadedFile(null); }}
+                    style={{ border: 'none', background: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '4px' }}
+                  >
+                    <X size={16} />
+                  </button>
                 </div>
               ) : (
                 <div>
-                  <p style={{ fontSize: '14px', color: 'var(--text-primary)', fontWeight: '500', marginBottom: '4px' }}>
-                    Drop file here or click to browse
-                  </p>
-                  <p style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
-                    {mode === 'image' && 'Supports PNG, JPG, WEBP (max 25MB)'}
-                    {mode === 'video' && 'Supports MP4, MOV, AVI (max 500MB)'}
-                    {mode === 'audio' && 'Supports MP3, WAV, FLAC (max 100MB)'}
-                  </p>
+                  <Upload size={28} style={{ color: 'var(--accent)', margin: '0 auto 10px' }} />
+                  <div style={{ fontSize: '14px', fontWeight: '600', color: 'var(--text-primary)', marginBottom: '4px' }}>
+                    Drag & drop media file here, or click to browse
+                  </div>
+                  <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+                    Runs automated face alignment, temporal sampling, and Grad-CAM heatmap extraction
+                  </div>
                 </div>
               )}
             </div>
-
-            <input
-              ref={fileRef}
-              type="file"
-              accept={
-                mode === 'image' ? 'image/*' : 
-                mode === 'video' ? 'video/*' : 
-                'audio/*'
-              }
-              onChange={e => { if (e.target.files?.[0]) setFileName(e.target.files[0].name); }}
-              style={{ display: 'none' }}
-            />
-
-            {/* Optional caption/context for media */}
-            <div style={{ marginTop: '16px' }}>
-              <label className="ts-label" htmlFor="media-context">Context / Caption (Optional)</label>
-              <textarea
-                id="media-context"
-                className="ts-input ts-textarea"
-                placeholder="Provide any accompanying text, headline, or context for better analysis..."
-                value={textInput}
-                onChange={e => setTextInput(e.target.value)}
-                style={{ minHeight: '80px' }}
-              />
-            </div>
           </div>
         )}
-      </div>
 
-      {/* ── Language & Settings Row ── */}
-      <div className="ts-card" style={{ 
-        padding: '16px 20px', marginBottom: '20px',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        flexWrap: 'wrap', gap: '12px',
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <Globe size={16} style={{ color: 'var(--accent)' }} />
+        {/* Multimodal & Text: Claim or Article Text */}
+        {(workspaceMode === 'multimodal' || workspaceMode === 'text') && (
           <div>
-            <label className="ts-label" htmlFor="lang-select" style={{ marginBottom: '0' }}>
-              Language
-            </label>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+              <label style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text-primary)' }}>
+                Regional News Claim, Headline, or Social Post
+              </label>
+
+              {/* Language auto-detect pill */}
+              <div style={{
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
+                padding: '3px 10px', borderRadius: 'var(--radius-full)',
+                background: 'var(--accent-gradient-subtle)', border: '1px solid var(--accent-border)',
+                fontSize: '11px', fontWeight: '600', color: 'var(--accent)'
+              }}>
+                <Globe size={12} />
+                <span>Detected: {detectedLang.name} ({detectedLang.script})</span>
+              </div>
+            </div>
+
+            <textarea
+              rows={4}
+              placeholder="Paste headline, WhatsApp forward, or claim in Hindi, Punjabi, Tamil, Bengali, Telugu, English..."
+              value={claimText}
+              onChange={handleTextChange}
+              style={{
+                width: '100%',
+                padding: '14px',
+                borderRadius: 'var(--radius-md)',
+                border: '1px solid var(--border-default)',
+                background: 'var(--bg-inset)',
+                color: 'var(--text-primary)',
+                fontSize: '14px',
+                lineHeight: '1.6',
+                resize: 'vertical',
+                marginBottom: '14px'
+              }}
+            />
+
+            {workspaceMode === 'text' && (
+              <div style={{ marginTop: '8px' }}>
+                <div style={{ fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', marginBottom: '6px' }}>
+                  Or verify from web link:
+                </div>
+                <div style={{ position: 'relative' }}>
+                  <Link2 size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                  <input
+                    type="url"
+                    placeholder="https://news-portal.com/article-to-verify"
+                    value={urlInput}
+                    onChange={(e) => setUrlInput(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '10px 12px 10px 36px',
+                      borderRadius: 'var(--radius-md)',
+                      border: '1px solid var(--border-default)',
+                      background: 'var(--bg-inset)',
+                      color: 'var(--text-primary)',
+                      fontSize: '13px'
+                    }}
+                  />
+                </div>
+              </div>
+            )}
           </div>
-          <select
-            id="lang-select"
-            className="ts-input ts-select"
-            value={selectedLang}
-            onChange={e => setSelectedLang(e.target.value)}
-            style={{ width: '200px' }}
+        )}
+
+        {/* Action Button */}
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '24px' }}>
+          <button
+            className="ts-btn ts-btn-primary ts-btn-lg"
+            disabled={!canSubmit}
+            onClick={handleStartScan}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', opacity: canSubmit ? 1 : 0.6 }}
           >
-            {LANGUAGES.map(l => (
-              <option key={l.code} value={l.code}>
-                {l.name} {l.native && `(${l.native})`}
-              </option>
-            ))}
-          </select>
+            <span>Run Forensic Verification</span>
+            <ArrowRight size={18} />
+          </button>
         </div>
 
-        <button
-          className="ts-btn ts-btn-primary ts-btn-lg"
-          onClick={handleSubmit}
-          disabled={!isReady}
-          style={{ 
-            opacity: isReady ? 1 : 0.5,
-            cursor: isReady ? 'pointer' : 'not-allowed',
-          }}
-        >
-          <Sparkles size={16} />
-          <span>Begin Verification</span>
-          <ArrowRight size={16} />
-        </button>
       </div>
 
-      {/* ── Quick Samples ── */}
-      <div style={{ marginTop: '32px' }}>
-        <p style={{ 
-          fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)',
-          textTransform: 'uppercase', letterSpacing: '0.5px',
-          marginBottom: '12px',
-        }}>
-          Try a sample
-        </p>
-        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          {SAMPLE_PRESETS.map((preset, i) => (
-            <button
-              key={i}
-              className="ts-btn ts-btn-secondary ts-btn-sm"
-              onClick={() => loadPreset(preset)}
-              style={{
-                borderRadius: 'var(--radius-full)',
-                padding: '6px 14px',
-              }}
+      {/* Preset Quick Demo Cases */}
+      <div>
+        <div style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '14px' }}>
+          Instant Test Presets (Regional Indian Languages)
+        </div>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '12px' }}>
+          {PRESET_CASES.map(p => (
+            <div
+              key={p.id}
+              onClick={() => handleSelectPreset(p)}
+              className="ts-card ts-card-interactive"
+              style={{ padding: '14px 16px', cursor: 'pointer' }}
             >
-              {preset.label}
-            </button>
+              <div style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-primary)', marginBottom: '4px' }}>
+                {p.title}
+              </div>
+              <div style={{
+                fontSize: '12px', color: 'var(--text-secondary)',
+                overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
+              }}>
+                "{p.text}"
+              </div>
+            </div>
           ))}
         </div>
       </div>
+
     </div>
   );
 }

@@ -1,211 +1,176 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  CheckCircle2, Loader2, Circle, FileSearch, Globe, 
-  Shield, BarChart3, FileText, Database, Brain, Layers
+  CheckCircle2, Loader2, FileSearch, Globe, 
+  Shield, BarChart3, FileText, Database, Layers,
+  Cpu, ScanLine
 } from 'lucide-react';
 
 const PIPELINE_STAGES = [
-  { id: 'ingest', label: 'Content Ingestion', desc: 'Parsing and preprocessing input media', icon: FileSearch, duration: 1800 },
-  { id: 'lang', label: 'Language Detection', desc: 'Identifying script and language family', icon: Globe, duration: 1200 },
-  { id: 'claims', label: 'Claim Extraction', desc: 'Decomposing content into verifiable claims', icon: FileText, duration: 2000 },
-  { id: 'source', label: 'Source Verification', desc: 'Cross-referencing official sources and archives', icon: Database, duration: 2500 },
-  { id: 'media', label: 'Media Forensics', desc: 'FFT spectral analysis, ELA, and metadata check', icon: Shield, duration: 2200 },
-  { id: 'ai', label: 'AI Pattern Analysis', desc: 'Vision Transformer and RL agent inference', icon: Brain, duration: 1800 },
-  { id: 'cross', label: 'Cross-Modal Validation', desc: 'Multimodal consistency and alignment check', icon: Layers, duration: 1500 },
-  { id: 'report', label: 'Report Generation', desc: 'Compiling evidence into verification report', icon: BarChart3, duration: 1000 },
+  { id: 'ingest', label: 'Ingest & Script Identification', desc: 'Detecting Unicode ranges and normalizing frame sampling', icon: Globe, duration: 1100 },
+  { id: 'face', label: 'Face Alignment & Temporal Sampling', desc: 'Extracting keyframes and facial bounding contours', icon: FileSearch, duration: 1300 },
+  { id: 'cnn', label: 'CNN Forensics & Grad-CAM Heatmap', desc: 'Analyzing spatial boundaries and 2D FFT spectral harmonics', icon: Shield, duration: 1500 },
+  { id: 'nlp', label: 'Regional NLP & Claim Decomposition', desc: 'Highlighting urgency triggers and sensationalism cues', icon: FileText, duration: 1200 },
+  { id: 'vector', label: 'Fact-Check Database Similarity Search', desc: 'Querying indexed debunks from PIB, Alt News, and BOOM Live', icon: Database, duration: 1400 },
+  { id: 'fusion', label: 'Multimodal Fusion Synthesis', desc: 'Calculating unified Trust Score and confidence intervals', icon: Layers, duration: 1100 },
 ];
 
-export default function AnalysisPipeline({ onComplete }) {
+export default function AnalysisPipeline({ inputData, onComplete }) {
   const [currentStage, setCurrentStage] = useState(0);
-  const [elapsed, setElapsed] = useState(0);
-  const [stageTimers, setStageTimers] = useState({});
+  const [elapsedMs, setElapsedMs] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setElapsed(prev => prev + 100);
-    }, 100);
-    return () => clearInterval(interval);
+    const timer = setInterval(() => {
+      setElapsedMs(prev => prev + 50);
+    }, 50);
+    return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
     if (currentStage >= PIPELINE_STAGES.length) {
-      const timer = setTimeout(() => onComplete(), 600);
-      return () => clearTimeout(timer);
+      const finishTimer = setTimeout(() => {
+        onComplete();
+      }, 500);
+      return () => clearTimeout(finishTimer);
     }
-    const stage = PIPELINE_STAGES[currentStage];
-    const timer = setTimeout(() => {
-      setStageTimers(prev => ({ ...prev, [stage.id]: stage.duration }));
+
+    const currentDuration = PIPELINE_STAGES[currentStage].duration;
+    const stageTimer = setTimeout(() => {
       setCurrentStage(prev => prev + 1);
-    }, stage.duration);
-    return () => clearTimeout(timer);
+    }, currentDuration);
+
+    return () => clearTimeout(stageTimer);
   }, [currentStage, onComplete]);
 
-  const totalDuration = PIPELINE_STAGES.reduce((a, s) => a + s.duration, 0);
-  const completedDuration = PIPELINE_STAGES.slice(0, currentStage).reduce((a, s) => a + s.duration, 0);
-  const progress = Math.min((completedDuration / totalDuration) * 100, 100);
+  const progressPercent = Math.min(100, Math.round((currentStage / PIPELINE_STAGES.length) * 100));
   const isComplete = currentStage >= PIPELINE_STAGES.length;
 
   return (
-    <div className="anim-fade-in-up ts-hero-grid" style={{ 
-      maxWidth: '780px', margin: '0 auto', padding: '48px 24px',
-      position: 'relative',
-    }}>
+    <div className="anim-fade-in-up" style={{ maxWidth: '860px', margin: '0 auto', padding: '40px 24px' }}>
       
       {/* Header */}
-      <div style={{ marginBottom: '32px', position: 'relative', zIndex: 1 }}>
-        <h1 className="ts-section-title" style={{ fontSize: '24px', marginBottom: '6px' }}>
-          Analyzing Content
+      <div style={{ marginBottom: '28px', textAlign: 'center' }}>
+        <div style={{
+          display: 'inline-flex', alignItems: 'center', gap: '8px',
+          padding: '4px 14px', borderRadius: 'var(--radius-full)',
+          background: 'var(--accent-gradient-subtle)', border: '1px solid var(--accent-border)',
+          fontSize: '12px', fontWeight: '600', color: 'var(--accent)',
+          marginBottom: '12px'
+        }}>
+          <Cpu size={14} />
+          <span>Real-Time Forensic Engine Active</span>
+        </div>
+        <h1 className="ts-section-title" style={{ fontSize: '28px', marginBottom: '6px' }}>
+          Analyzing Media & Claims
         </h1>
-        <p className="ts-section-subtitle">
-          Running multi-stage forensic verification pipeline.
+        <p className="ts-section-subtitle" style={{ margin: '0 auto', maxWidth: '600px' }}>
+          Running dual-pipeline analysis: visual spatial-temporal artifacts + regional NLP fact-checking.
         </p>
       </div>
 
-      {/* Overall Progress */}
-      <div className="ts-card" style={{ 
-        padding: '20px', marginBottom: '24px', position: 'relative', 
-        overflow: 'hidden', zIndex: 1,
-      }}>
-        {/* Gradient top bar */}
+      {/* ── LIVE SCANNER FRAME VISUALIZER ── */}
+      <div className="ts-card" style={{ padding: '0', marginBottom: '24px', overflow: 'hidden', position: 'relative' }}>
         <div style={{
-          position: 'absolute', top: 0, left: 0, right: 0, height: '3px',
-          background: isComplete ? 'var(--success-gradient)' : 'var(--accent-gradient)',
-        }} />
-
-        <div style={{ 
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          marginBottom: '12px',
+          height: '200px', background: '#090d16', position: 'relative',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            {!isComplete && <div className="ts-spinner" />}
-            {isComplete && (
-              <div style={{
-                width: '22px', height: '22px', borderRadius: '50%',
-                background: 'var(--success-gradient)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                boxShadow: 'var(--glow-success)',
-              }}>
-                <CheckCircle2 size={14} style={{ color: '#fff' }} />
-              </div>
-            )}
-            <span style={{ 
-              fontSize: '14px', fontWeight: '600', color: 'var(--text-primary)' 
-            }}>
-              {isComplete ? 'Analysis Complete' : `Stage ${currentStage + 1} of ${PIPELINE_STAGES.length}`}
-            </span>
-          </div>
-          {/* Digital clock style */}
-          <span style={{ 
-            fontSize: '14px', color: 'var(--accent)', fontFamily: 'var(--font-mono)',
-            fontWeight: '600', letterSpacing: '0.5px',
-            background: 'var(--accent-light)', padding: '4px 10px',
-            borderRadius: 'var(--radius-sm)',
+          {/* Sweeping Laser Scan Line */}
+          <div style={{
+            position: 'absolute', top: 0, bottom: 0, width: '3px',
+            background: 'linear-gradient(180deg, transparent, #38bdf8, transparent)',
+            boxShadow: '0 0 16px #38bdf8',
+            animation: 'radarSweep 2.8s linear infinite',
+            zIndex: 2
+          }} />
+
+          {/* Grid Overlay */}
+          <div style={{
+            position: 'absolute', inset: 0,
+            backgroundImage: 'radial-gradient(rgba(56, 189, 248, 0.15) 1px, transparent 1px)',
+            backgroundSize: '20px 20px', pointerEvents: 'none'
+          }} />
+
+          {/* Center Target Box */}
+          <div style={{
+            width: '120px', height: '120px', border: '1px solid rgba(56, 189, 248, 0.4)',
+            borderRadius: 'var(--radius-md)', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center'
           }}>
-            {(elapsed / 1000).toFixed(1)}s
-          </span>
+            <div style={{ width: '8px', height: '8px', borderTop: '2px solid #38bdf8', borderLeft: '2px solid #38bdf8', position: 'absolute', top: '-1px', left: '-1px' }} />
+            <div style={{ width: '8px', height: '8px', borderTop: '2px solid #38bdf8', borderRight: '2px solid #38bdf8', position: 'absolute', top: '-1px', right: '-1px' }} />
+            <div style={{ width: '8px', height: '8px', borderBottom: '2px solid #38bdf8', borderLeft: '2px solid #38bdf8', position: 'absolute', bottom: '-1px', left: '-1px' }} />
+            <div style={{ width: '8px', height: '8px', borderBottom: '2px solid #38bdf8', borderRight: '2px solid #38bdf8', position: 'absolute', bottom: '-1px', right: '-1px' }} />
+            <ScanLine size={32} style={{ color: '#38bdf8', opacity: 0.8 }} />
+          </div>
+
+          {/* Live Telemetry HUD */}
+          <div style={{ position: 'absolute', top: '14px', left: '16px', fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.7)' }}>
+            TARGET: {inputData?.file || 'sample_media.mp4'}
+          </div>
+          <div style={{ position: 'absolute', bottom: '14px', left: '16px', fontSize: '11px', fontFamily: 'var(--font-mono)', color: '#38bdf8' }}>
+            ELAPSED: {(elapsedMs / 1000).toFixed(2)}s • ACCELERATION: APPLE MPS / CUDA
+          </div>
+          <div style={{ position: 'absolute', top: '14px', right: '16px', fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.7)' }}>
+            STATUS: STAGE {Math.min(currentStage + 1, PIPELINE_STAGES.length)}/6
+          </div>
         </div>
-        <div className="ts-meter" style={{ height: '10px', borderRadius: '5px' }}>
-          <div 
-            className="ts-meter-fill"
-            style={{ 
-              width: `${progress}%`, 
-              background: isComplete ? 'var(--success-gradient)' : 'var(--accent-gradient)',
-              borderRadius: '5px',
-            }} 
-          />
+
+        {/* Progress Bar */}
+        <div style={{ height: '4px', background: 'var(--bg-inset)', width: '100%' }}>
+          <div style={{
+            height: '100%', width: `${progressPercent}%`,
+            background: 'var(--accent-gradient)',
+            transition: 'width 0.3s ease'
+          }} />
         </div>
       </div>
 
-      {/* Stage Timeline */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', position: 'relative', zIndex: 1 }}>
-        {PIPELINE_STAGES.map((stage, i) => {
+      {/* ── STAGE CARDS ── */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        {PIPELINE_STAGES.map((stage, idx) => {
           const Icon = stage.icon;
-          const isActive = i === currentStage;
-          const isDone = i < currentStage;
-          const isPending = i > currentStage;
+          const isDone = idx < currentStage;
+          const isCurrent = idx === currentStage;
 
           return (
             <div
               key={stage.id}
-              className={isDone || isActive ? 'anim-fade-in-up' : ''}
+              className="ts-card"
               style={{
-                display: 'flex', alignItems: 'flex-start', gap: '16px',
-                padding: '16px 18px',
-                background: isActive 
-                  ? 'var(--accent-gradient-subtle)' 
-                  : 'transparent',
-                borderRadius: 'var(--radius-xl)',
-                border: isActive ? `1px solid var(--accent-border)` : '1px solid transparent',
-                opacity: isPending ? 0.35 : 1,
-                transition: 'all var(--transition-base)',
-                boxShadow: isActive ? 'var(--glow-accent)' : 'none',
+                padding: '14px 18px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '14px',
+                border: isCurrent ? '1px solid var(--accent)' : '1px solid var(--border-default)',
+                background: isCurrent ? 'var(--accent-gradient-subtle)' : 'var(--bg-surface)',
+                opacity: idx > currentStage ? 0.45 : 1,
+                transition: 'all var(--transition-base)'
               }}
             >
-              {/* Step Indicator */}
-              <div style={{ 
-                flexShrink: 0, width: '36px', height: '36px',
-                borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                background: isDone 
-                  ? 'var(--success-gradient)' 
-                  : isActive 
-                    ? 'var(--accent-gradient)' 
-                    : 'var(--bg-inset)',
-                border: `1px solid ${isDone ? 'transparent' : isActive ? 'transparent' : 'var(--border-default)'}`,
-                color: isDone || isActive ? '#fff' : 'var(--text-muted)',
-                transition: 'all var(--transition-base)',
-                boxShadow: isDone 
-                  ? 'var(--glow-success)' 
-                  : isActive 
-                    ? 'var(--glow-accent)' 
-                    : 'none',
+              <div style={{
+                width: '32px', height: '32px', borderRadius: 'var(--radius-md)',
+                background: isDone ? 'var(--success-gradient)' : (isCurrent ? 'var(--accent)' : 'var(--bg-inset)'),
+                color: isDone || isCurrent ? '#fff' : 'var(--text-muted)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
               }}>
-                {isDone ? (
-                  <CheckCircle2 size={16} />
-                ) : isActive ? (
-                  <div className="ts-spinner" style={{ 
-                    width: '16px', height: '16px',
-                    borderColor: 'rgba(255,255,255,0.3)',
-                    borderTopColor: '#fff',
-                  }} />
-                ) : (
-                  <span style={{ fontSize: '12px', fontWeight: '700' }}>{i + 1}</span>
-                )}
+                {isDone ? <CheckCircle2 size={16} /> : (isCurrent ? <Loader2 size={16} className="anim-spin" /> : <Icon size={16} />)}
               </div>
 
-              {/* Stage Info */}
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ 
-                  display: 'flex', alignItems: 'center', gap: '8px',
-                  marginBottom: '2px',
-                }}>
-                  <Icon size={14} style={{ 
-                    color: isDone ? 'var(--verified)' : isActive ? 'var(--accent)' : 'var(--text-muted)',
-                    ...(isActive ? { animation: 'iconSpin 2s linear infinite' } : {}),
-                  }} />
-                  <span style={{ 
-                    fontSize: '14px', fontWeight: '600', color: 'var(--text-primary)' 
-                  }}>
-                    {stage.label}
-                  </span>
-                  {isDone && stageTimers[stage.id] && (
-                    <span style={{ 
-                      fontSize: '11px', color: 'var(--verified)', fontFamily: 'var(--font-mono)',
-                      fontWeight: '600',
-                      background: 'var(--verified-bg)', padding: '1px 6px',
-                      borderRadius: 'var(--radius-sm)',
-                    }}>
-                      {(stageTimers[stage.id] / 1000).toFixed(1)}s ✓
-                    </span>
-                  )}
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-primary)', marginBottom: '2px' }}>
+                  {stage.label}
                 </div>
-                <p style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
+                <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
                   {stage.desc}
-                </p>
+                </div>
+              </div>
+
+              <div style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: isDone ? 'var(--verified)' : (isCurrent ? 'var(--accent)' : 'var(--text-muted)') }}>
+                {isDone ? 'COMPLETE' : (isCurrent ? 'PROCESSING...' : 'QUEUED')}
               </div>
             </div>
           );
         })}
       </div>
+
     </div>
   );
 }

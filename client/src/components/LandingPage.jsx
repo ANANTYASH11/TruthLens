@@ -230,6 +230,75 @@ export default function LandingPage({ onStartVerification }) {
         </div>
       </section>
 
+      {/* ═══ DUAL-PIPELINE ARCHITECTURE VISUALIZER ═══ */}
+      <section className="anim-fade-in-up" style={{ marginBottom: '64px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+          <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
+            Two Independent Forensic Pipelines · One Fused Trust Score
+          </span>
+          <h2 style={{ fontSize: '24px', fontWeight: '800', color: 'var(--text-primary)', marginTop: '4px' }}>
+            Multimodal Intelligence Architecture
+          </h2>
+        </div>
+
+        <div style={{
+          display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '20px', alignItems: 'center',
+          background: 'var(--bg-surface)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)',
+          padding: '28px', boxShadow: 'var(--shadow-md)', position: 'relative', overflow: 'hidden'
+        }}>
+          {/* Media Pipeline Box */}
+          <div style={{
+            background: 'var(--bg-inset)', padding: '20px', borderRadius: 'var(--radius-lg)',
+            border: '1px solid var(--border-default)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+              <div style={{ width: '28px', height: '28px', borderRadius: 'var(--radius-md)', background: 'var(--accent-gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
+                <Video size={15} />
+              </div>
+              <span style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)' }}>Media Forensics Pipeline</span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '12px', color: 'var(--text-secondary)' }}>
+              <div>• MTCNN Face Extraction & Keyframe Jitter</div>
+              <div>• Fine-Tuned CNN / EfficientNet Forgery Classifier</div>
+              <div>• Grad-CAM Spatial Heatmap Overlays</div>
+              <div>• 2D FFT Frequency Upsampling Detection</div>
+            </div>
+          </div>
+
+          {/* Fusion Center Node */}
+          <div style={{ textAlign: 'center', padding: '0 10px' }}>
+            <div style={{
+              width: '64px', height: '64px', borderRadius: '50%', background: 'var(--accent-gradient)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff',
+              margin: '0 auto 8px', boxShadow: 'var(--glow-accent)'
+            }}>
+              <ShieldCheck size={32} />
+            </div>
+            <div style={{ fontSize: '12px', fontWeight: '800', color: 'var(--text-primary)' }}>Trust Score</div>
+            <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>0 — 100%</div>
+          </div>
+
+          {/* Text Pipeline Box */}
+          <div style={{
+            background: 'var(--bg-inset)', padding: '20px', borderRadius: 'var(--radius-lg)',
+            border: '1px solid var(--border-default)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+              <div style={{ width: '28px', height: '28px', borderRadius: 'var(--radius-md)', background: 'var(--success-gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
+                <Globe size={15} />
+              </div>
+              <span style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)' }}>Regional Text Pipeline</span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '12px', color: 'var(--text-secondary)' }}>
+              <div>• Native Scripts: Hindi, Punjabi, Tamil, Bengali</div>
+              <div>• Linguistic Urgency & Panic Trigger Highlighting</div>
+              <div>• Claim Decomposition & Entity Extraction</div>
+              <div>• PIB / Alt News / BOOM Vector Similarity Index</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ═══ LIVE PREVIEW CARD ═══ */}
       <section className="ts-card anim-fade-in-up stagger-5" style={{ 
         padding: '0', marginBottom: '80px',
@@ -260,7 +329,7 @@ export default function LandingPage({ onStartVerification }) {
               fontSize: '12px', color: 'var(--text-muted)', 
               fontFamily: 'var(--font-mono)' 
             }}>
-              Case #TS-2026-8942
+              Case #TL-2026-8942
             </span>
           </div>
           <div style={{ 

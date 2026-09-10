@@ -1,14 +1,15 @@
 import React from 'react';
 import { 
   ShieldCheck, Sun, Moon, Search, FileText, History, 
-  Building2, Command, ChevronDown, Menu, X 
+  Building2, Command, ChevronDown, Menu, X, Database, BookOpen 
 } from 'lucide-react';
 
 const NAV_ITEMS = [
   { id: 'workspace', label: 'Verify', icon: Search },
+  { id: 'factchecks', label: 'Fact-Checks', icon: Database },
+  { id: 'methodology', label: 'Viva & Methodology', icon: BookOpen },
   { id: 'history', label: 'Investigations', icon: History },
-  { id: 'report', label: 'Reports', icon: FileText },
-  { id: 'enterprise', label: 'Enterprise', icon: Building2 },
+  { id: 'report', label: 'Audit Report', icon: FileText },
 ];
 
 export default function Navbar({ currentView, setCurrentView, theme, toggleTheme }) {
@@ -68,14 +69,14 @@ export default function Navbar({ currentView, setCurrentView, theme, toggleTheme
               fontWeight: '500', letterSpacing: '0.2px',
               lineHeight: '1',
             }}>
-              Verify before you trust
+              Multimodal Verification Platform
             </div>
           </div>
         </div>
 
         {/* ── Desktop Navigation ── */}
         <nav className="ts-hide-mobile" style={{ 
-          display: 'flex', alignItems: 'center', gap: '2px',
+          display: 'flex', alignItems: 'center', gap: '4px',
         }}>
           {NAV_ITEMS.map(item => {
             const Icon = item.icon;
@@ -97,22 +98,9 @@ export default function Navbar({ currentView, setCurrentView, theme, toggleTheme
                   transition: 'all var(--transition-fast)',
                   position: 'relative',
                 }}
-                onMouseEnter={e => {
-                  if (!isActive) {
-                    e.currentTarget.style.background = 'var(--bg-hover)';
-                    e.currentTarget.style.color = 'var(--text-primary)';
-                  }
-                }}
-                onMouseLeave={e => {
-                  if (!isActive) {
-                    e.currentTarget.style.background = 'transparent';
-                    e.currentTarget.style.color = 'var(--text-secondary)';
-                  }
-                }}
               >
                 <Icon size={15} />
                 <span>{item.label}</span>
-                {/* Active indicator dot */}
                 {isActive && (
                   <div style={{
                     position: 'absolute', bottom: '2px', left: '50%',
@@ -129,57 +117,61 @@ export default function Navbar({ currentView, setCurrentView, theme, toggleTheme
 
         {/* ── Right Controls ── */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
-          
-          {/* Keyboard Shortcut Hint */}
-          <div className="ts-hide-mobile" style={{
-            display: 'flex', alignItems: 'center', gap: '4px',
-            fontSize: '11px', color: 'var(--text-muted)',
-            padding: '4px 8px', borderRadius: 'var(--radius-sm)',
-            border: '1px solid var(--border-default)',
-            background: 'var(--bg-inset)',
-          }}>
-            <Command size={11} />
-            <span>K</span>
-          </div>
-
-          {/* Theme Toggle */}
+          {/* Theme toggle */}
           <button 
+            className="ts-theme-toggle"
             onClick={toggleTheme}
-            className="ts-btn ts-btn-ghost"
-            style={{ padding: '7px', borderRadius: 'var(--radius-md)' }}
-            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            aria-label="Toggle theme"
+            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            style={{
+              width: '36px', height: '36px',
+              borderRadius: 'var(--radius-md)',
+              border: '1px solid var(--border-default)',
+              background: 'var(--bg-surface)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer',
+              color: 'var(--text-secondary)',
+              transition: 'all var(--transition-fast)',
+            }}
           >
-            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+            {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
           </button>
 
-          {/* Primary CTA */}
+          {/* Quick Action Button */}
           <button 
             className="ts-btn ts-btn-primary ts-hide-mobile"
             onClick={() => setCurrentView('workspace')}
+            style={{ fontSize: '12px', padding: '6px 14px' }}
           >
-            <ShieldCheck size={15} />
-            <span>Verify Content</span>
+            <Search size={13} />
+            <span>New Scan</span>
           </button>
 
-          {/* Mobile Menu Toggle */}
-          <button
-            className="ts-btn ts-btn-ghost"
+          {/* Mobile menu trigger */}
+          <button 
+            className="ts-show-mobile"
             onClick={() => setMobileOpen(!mobileOpen)}
-            style={{ display: 'none', padding: '7px' }}
-            aria-label="Toggle menu"
+            style={{
+              width: '36px', height: '36px',
+              borderRadius: 'var(--radius-md)',
+              border: '1px solid var(--border-default)',
+              background: 'var(--bg-surface)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer',
+              color: 'var(--text-secondary)',
+            }}
           >
             {mobileOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </div>
 
-      {/* ── Mobile Navigation Dropdown ── */}
+      {/* ── Mobile Dropdown Menu ── */}
       {mobileOpen && (
-        <div className="anim-fade-in" style={{
-          borderTop: '1px solid var(--border-default)',
-          padding: '8px',
-          display: 'flex', flexDirection: 'column', gap: '2px',
+        <div className="ts-show-mobile anim-fade-in-up" style={{
+          padding: '12px 24px 20px',
+          background: 'var(--bg-surface)',
+          borderBottom: '1px solid var(--border-default)',
+          display: 'flex', flexDirection: 'column', gap: '6px',
         }}>
           {NAV_ITEMS.map(item => {
             const Icon = item.icon;
@@ -189,17 +181,14 @@ export default function Navbar({ currentView, setCurrentView, theme, toggleTheme
                 key={item.id}
                 onClick={() => { setCurrentView(item.id); setMobileOpen(false); }}
                 style={{
-                  padding: '10px 12px',
-                  fontSize: '14px',
-                  fontWeight: isActive ? '600' : '500',
-                  color: isActive ? 'var(--accent)' : 'var(--text-secondary)',
-                  background: isActive ? 'var(--accent-light)' : 'transparent',
-                  border: 'none',
+                  padding: '10px 14px',
                   borderRadius: 'var(--radius-md)',
-                  cursor: 'pointer',
-                  display: 'flex', alignItems: 'center', gap: '8px',
+                  border: 'none',
+                  background: isActive ? 'var(--accent-light)' : 'transparent',
+                  color: isActive ? 'var(--accent)' : 'var(--text-primary)',
+                  fontSize: '14px', fontWeight: '500',
+                  display: 'flex', alignItems: 'center', gap: '10px',
                   textAlign: 'left',
-                  width: '100%',
                 }}
               >
                 <Icon size={16} />
@@ -207,14 +196,6 @@ export default function Navbar({ currentView, setCurrentView, theme, toggleTheme
               </button>
             );
           })}
-          <button
-            className="ts-btn ts-btn-primary"
-            onClick={() => { setCurrentView('workspace'); setMobileOpen(false); }}
-            style={{ marginTop: '4px' }}
-          >
-            <ShieldCheck size={15} />
-            <span>Verify Content</span>
-          </button>
         </div>
       )}
     </header>
