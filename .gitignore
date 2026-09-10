@@ -18,6 +18,10 @@ client/dist/
 *.db
 *.sqlite3
 
+# Uploads
+server/uploads/*
+!server/uploads/.gitkeep
+
 # macOS / OS artifacts
 .DS_Store
 Thumbs.db

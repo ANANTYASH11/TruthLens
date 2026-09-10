@@ -103,14 +103,14 @@ export default function VerificationWorkspace({ onStartAnalysis }) {
     setIsDragging(false);
     const file = e.dataTransfer?.files?.[0];
     if (file) {
-      setUploadedFile({ name: file.name, size: `${(file.size / (1024 * 1024)).toFixed(1)} MB` });
+      setUploadedFile({ name: file.name, size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`, fileObj: file });
     }
   };
 
   const handleFileSelect = (e) => {
     const file = e.target.files?.[0];
     if (file) {
-      setUploadedFile({ name: file.name, size: `${(file.size / (1024 * 1024)).toFixed(1)} MB` });
+      setUploadedFile({ name: file.name, size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`, fileObj: file });
     }
   };
 
@@ -120,6 +120,7 @@ export default function VerificationWorkspace({ onStartAnalysis }) {
       text: claimText,
       url: urlInput,
       file: uploadedFile?.name || 'demo_sample.mp4',
+      fileObj: uploadedFile?.fileObj || null,
       language: detectedLang.code
     });
   };

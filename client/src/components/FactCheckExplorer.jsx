@@ -97,22 +97,38 @@ const STATIC_FACT_CHECKS = [
   }
 ];
 
+import { getFactChecks } from '../services/api';
+
 export default function FactCheckExplorer({ onSelectClaim }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLang, setSelectedLang] = useState('all');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [checks, setChecks] = useState(STATIC_FACT_CHECKS);
+  const [isDbLive, setIsDbLive] = useState(false);
 
-  const filteredChecks = STATIC_FACT_CHECKS.filter(item => {
-    const matchesSearch = searchQuery === '' || 
-      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.claim.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.debunk_summary.toLowerCase().includes(searchQuery.toLowerCase());
+  useEffect(() => {
+    let active = true;
+    getFactChecks(searchQuery, selectedLang, selectedCategory).then(res => {
+      if (active && res && res.length > 0) {
+        setChecks(res);
+        setIsDbLive(true);
+      } else if (active) {
+        const filtered = STATIC_FACT_CHECKS.filter(item => {
+          const matchesSearch = searchQuery === '' || 
+            item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.claim.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.debunk_summary.toLowerCase().includes(searchQuery.toLowerCase());
+          const matchesLang = selectedLang === 'all' || item.language === selectedLang;
+          const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
+          return matchesSearch && matchesLang && matchesCategory;
+        });
+        setChecks(filtered);
+      }
+    });
+    return () => { active = false; };
+  }, [searchQuery, selectedLang, selectedCategory]);
 
-    const matchesLang = selectedLang === 'all' || item.language === selectedLang;
-    const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
-
-    return matchesSearch && matchesLang && matchesCategory;
-  });
+  const filteredChecks = checks;
 
   return (
     <div className="anim-fade-in-up" style={{ maxWidth: '1100px', margin: '0 auto', padding: '48px 24px' }}>

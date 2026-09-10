@@ -15,6 +15,8 @@ import InvestigationHistory from './components/InvestigationHistory';
 import VerificationReport from './components/VerificationReport';
 import SettingsModal from './components/SettingsModal';
 
+import { analyzeMultimodal, analyzeText, analyzeUrl } from './services/api';
+
 export default function App() {
   const [currentView, setCurrentView] = useState('landing');
   const [theme, setTheme] = useState(() => {
@@ -39,28 +41,24 @@ export default function App() {
   };
 
   const handlePipelineComplete = async () => {
-    // Attempt live API fetch if server is running, or fall back to rich deterministic data
     let resData = null;
     try {
-      const endpoint = activeAnalysisInput?.mode === 'multimodal'
-        ? 'http://localhost:5050/api/analyze/multimodal'
-        : (activeAnalysisInput?.mode === 'text' ? 'http://localhost:5050/api/analyze/text' : 'http://localhost:5050/api/analyze/video');
-
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          file_path: activeAnalysisInput?.file || 'demo_deepfake.mp4',
-          text: activeAnalysisInput?.text || '',
-          language: activeAnalysisInput?.language || 'hi'
-        })
-      });
-
-      if (response.ok) {
-        resData = await response.json();
+      if (activeAnalysisInput?.fileObj || activeAnalysisInput?.mode === 'multimodal') {
+        resData = await analyzeMultimodal(
+          activeAnalysisInput?.fileObj,
+          activeAnalysisInput?.text,
+          activeAnalysisInput?.language
+        );
+      } else if (activeAnalysisInput?.mode === 'url' && activeAnalysisInput?.url) {
+        resData = await analyzeUrl(activeAnalysisInput.url);
+      } else {
+        resData = await analyzeText(
+          activeAnalysisInput?.text,
+          activeAnalysisInput?.language
+        );
       }
     } catch (e) {
-      console.log('Local API offline, using client-side deterministic forensic data.');
+      console.warn('API call failed, falling back to client engine.');
     }
 
     if (!resData) {
@@ -217,6 +215,24 @@ export default function App() {
         {currentView === 'history' && (
           <InvestigationHistory 
             onOpenReport={() => setCurrentView('report')} 
+            onSelectCase={(caseRecord) => {
+              if (caseRecord.metrics && caseRecord.metrics.fusion) {
+                setAnalysisResult({
+                  record_id: caseRecord.case_id,
+                  unified_trust_score: caseRecord.trust_score,
+                  confidence_margin: caseRecord.confidence_margin,
+                  verdict: caseRecord.verdict,
+                  risk_level: caseRecord.risk_level,
+                  summary_narrative: caseRecord.metrics.fusion?.summary_narrative,
+                  media_analysis: caseRecord.metrics.media,
+                  text_analysis: caseRecord.metrics.text,
+                  fusion_result: caseRecord.metrics.fusion
+                });
+                setCurrentView('results');
+              } else {
+                setCurrentView('report');
+              }
+            }}
           />
         )}
 
