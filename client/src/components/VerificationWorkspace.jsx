@@ -156,6 +156,60 @@ export default function VerificationWorkspace({ onStartAnalysis }) {
         </p>
       </div>
 
+      {/* ── Recruiter 1-Click Demonstration Scenarios ── */}
+      <div style={{
+        background: 'linear-gradient(145deg, rgba(0, 240, 255, 0.08) 0%, rgba(99, 102, 241, 0.06) 100%)',
+        border: '1px solid rgba(0, 240, 255, 0.28)',
+        borderRadius: 'var(--radius-xl)',
+        padding: '20px 24px',
+        marginBottom: '28px',
+        boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', flexWrap: 'wrap', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span className="ts-recruiter-pill">
+              ⚡ RECRUITER 1-CLICK DEMO SUITE
+            </span>
+            <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+              Click any vector to auto-load media and regional text:
+            </span>
+          </div>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))', gap: '10px' }}>
+          {PRESET_CASES.map(p => (
+            <div
+              key={p.id}
+              onClick={() => handleSelectPreset(p)}
+              className="ts-glass-pill"
+              style={{
+                padding: '12px 14px',
+                borderRadius: 'var(--radius-md)',
+                cursor: 'pointer',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '4px',
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: '12px', fontWeight: '700', color: '#ffffff' }}>
+                  {p.title}
+                </span>
+                <span style={{ fontSize: '10px', color: '#00f0ff', fontFamily: 'monospace' }}>
+                  LOAD
+                </span>
+              </div>
+              <div style={{
+                fontSize: '11px', color: 'var(--text-secondary)',
+                overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
+              }}>
+                "{p.text}"
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Mode Selector Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px', marginBottom: '28px' }}>
         {WORKSPACE_MODES.map(m => {

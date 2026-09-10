@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   ShieldCheck, Sun, Moon, Search, FileText, History, 
-  Building2, Command, ChevronDown, Menu, X 
+  Building2, Command, ChevronDown, Menu, X, Zap, Code2 
 } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -10,14 +10,14 @@ const NAV_ITEMS = [
   { id: 'report', label: 'Audit Report', icon: FileText },
 ];
 
-export default function Navbar({ currentView, setCurrentView, theme, toggleTheme }) {
+export default function Navbar({ currentView, setCurrentView, theme, toggleTheme, onOpenRecruiterSpec }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   return (
     <header className="ts-no-print" style={{
-      backgroundColor: theme === 'dark' ? 'rgba(10,12,16,0.8)' : 'rgba(255,255,255,0.75)',
-      backdropFilter: 'blur(16px) saturate(1.8)',
-      WebkitBackdropFilter: 'blur(16px) saturate(1.8)',
+      backgroundColor: theme === 'dark' ? 'rgba(6, 7, 10, 0.85)' : 'rgba(255, 255, 255, 0.85)',
+      backdropFilter: 'blur(20px) saturate(1.8)',
+      WebkitBackdropFilter: 'blur(20px) saturate(1.8)',
       borderBottom: '1px solid var(--border-default)',
       position: 'sticky',
       top: 0,
@@ -27,7 +27,7 @@ export default function Navbar({ currentView, setCurrentView, theme, toggleTheme
         maxWidth: '1280px',
         margin: '0 auto',
         padding: '0 24px',
-        height: '56px',
+        height: '60px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -38,7 +38,7 @@ export default function Navbar({ currentView, setCurrentView, theme, toggleTheme
         <div 
           onClick={() => setCurrentView('landing')}
           style={{ 
-            display: 'flex', alignItems: 'center', gap: '10px', 
+            display: 'flex', alignItems: 'center', gap: '12px', 
             cursor: 'pointer', flexShrink: 0 
           }}
           role="button"
@@ -46,35 +46,37 @@ export default function Navbar({ currentView, setCurrentView, theme, toggleTheme
           aria-label="Go to home"
         >
           <div style={{
-            width: '32px', height: '32px',
-            borderRadius: 'var(--radius-md)',
-            background: 'var(--accent-gradient)',
+            width: '36px', height: '36px',
+            borderRadius: '12px',
+            background: 'linear-gradient(135deg, #00f0ff 0%, #3b82f6 50%, #8b5cf6 100%)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             color: '#ffffff',
-            boxShadow: '0 2px 8px rgba(37,99,235,0.25)',
+            boxShadow: '0 0 20px rgba(0, 240, 255, 0.4)',
           }}>
-            <ShieldCheck size={18} strokeWidth={2.5} />
+            <ShieldCheck size={20} strokeWidth={2.5} />
           </div>
           <div>
             <div style={{ 
-              fontSize: '15px', fontWeight: '800', 
-              letterSpacing: '-0.3px', lineHeight: '1.2',
+              fontSize: '17px', fontWeight: '900', 
+              letterSpacing: '-0.5px', lineHeight: '1.1',
+              fontFamily: 'var(--font-display)',
             }}>
               <span className="ts-gradient-text">TRUTH LENS</span>
             </div>
             <div style={{ 
               fontSize: '10px', color: 'var(--text-muted)', 
-              fontWeight: '500', letterSpacing: '0.2px',
-              lineHeight: '1',
+              fontWeight: '600', letterSpacing: '0.4px',
+              fontFamily: 'var(--font-mono)', lineHeight: '1',
+              marginTop: '2px',
             }}>
-              Multimodal Verification Platform
+              AUTONOMOUS FORENSIC AI
             </div>
           </div>
         </div>
 
         {/* ── Desktop Navigation ── */}
         <nav className="ts-hide-mobile" style={{ 
-          display: 'flex', alignItems: 'center', gap: '4px',
+          display: 'flex', alignItems: 'center', gap: '6px',
         }}>
           {NAV_ITEMS.map(item => {
             const Icon = item.icon;
@@ -86,7 +88,7 @@ export default function Navbar({ currentView, setCurrentView, theme, toggleTheme
                 style={{
                   padding: '8px 14px',
                   fontSize: '13px',
-                  fontWeight: isActive ? '600' : '500',
+                  fontWeight: isActive ? '700' : '500',
                   color: isActive ? 'var(--accent)' : 'var(--text-secondary)',
                   background: isActive ? 'var(--accent-light)' : 'transparent',
                   border: 'none',
@@ -106,6 +108,7 @@ export default function Navbar({ currentView, setCurrentView, theme, toggleTheme
                     width: '16px', height: '2px',
                     borderRadius: '1px',
                     background: 'var(--accent-gradient)',
+                    boxShadow: '0 0 8px #00f0ff',
                   }} />
                 )}
               </button>
@@ -114,7 +117,18 @@ export default function Navbar({ currentView, setCurrentView, theme, toggleTheme
         </nav>
 
         {/* ── Right Controls ── */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+          
+          {/* Recruiter Architecture Spec Pill */}
+          <button
+            className="ts-recruiter-pill ts-hide-mobile"
+            onClick={onOpenRecruiterSpec}
+            title="Inspect Full-Stack Engineering Architecture & PyTorch MPS Specs"
+          >
+            <Zap size={13} style={{ color: '#00f0ff' }} />
+            <span>Architecture Spec</span>
+          </button>
+
           {/* Theme toggle */}
           <button 
             className="ts-theme-toggle"
@@ -136,9 +150,9 @@ export default function Navbar({ currentView, setCurrentView, theme, toggleTheme
 
           {/* Quick Action Button */}
           <button 
-            className="ts-btn ts-btn-primary ts-hide-mobile"
+            className="ts-cyber-btn ts-hide-mobile"
             onClick={() => setCurrentView('workspace')}
-            style={{ fontSize: '12px', padding: '6px 14px' }}
+            style={{ fontSize: '12px', padding: '7px 16px', display: 'flex', alignItems: 'center', gap: '6px' }}
           >
             <Search size={13} />
             <span>New Scan</span>

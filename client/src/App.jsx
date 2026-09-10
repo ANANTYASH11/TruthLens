@@ -12,15 +12,17 @@ import MultilingualPanel from './components/MultilingualPanel';
 import InvestigationHistory from './components/InvestigationHistory';
 import VerificationReport from './components/VerificationReport';
 import SettingsModal from './components/SettingsModal';
+import RecruiterSpecModal from './components/RecruiterSpecModal';
 
 import { analyzeMultimodal, analyzeText, analyzeUrl } from './services/api';
 
 export default function App() {
   const [currentView, setCurrentView] = useState('landing');
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('ts-theme') || 'light';
+    return localStorage.getItem('ts-theme') || 'dark';
   });
   const [showSettings, setShowSettings] = useState(false);
+  const [showRecruiterSpec, setShowRecruiterSpec] = useState(false);
   const [activeAnalysisInput, setActiveAnalysisInput] = useState(null);
   const [analysisResult, setAnalysisResult] = useState(null);
 
@@ -158,6 +160,7 @@ export default function App() {
         setCurrentView={setCurrentView} 
         theme={theme} 
         toggleTheme={toggleTheme} 
+        onOpenRecruiterSpec={() => setShowRecruiterSpec(true)}
       />
 
       {/* Main Screen Views */}
@@ -219,9 +222,12 @@ export default function App() {
         )}
       </main>
 
-      {/* Settings Modal */}
+      {/* Settings & Recruiter Modals */}
       {showSettings && (
         <SettingsModal onClose={() => setShowSettings(false)} />
+      )}
+      {showRecruiterSpec && (
+        <RecruiterSpecModal onClose={() => setShowRecruiterSpec(false)} />
       )}
 
       {/* Footer */}
@@ -244,10 +250,16 @@ export default function App() {
           gap: '12px',
         }}>
           <div>
-            <strong style={{ color: 'var(--text-primary)' }}>TRUTH LENS</strong> — Multimodal Misinformation & Deepfake Detection Platform
+            <strong style={{ color: 'var(--text-primary)' }}>TRUTH LENS</strong> — Autonomous Multimodal Forensic Intelligence Platform
           </div>
 
           <div style={{ display: 'flex', gap: '16px' }}>
+            <button 
+              onClick={() => setShowRecruiterSpec(true)} 
+              style={{ background: 'none', border: 'none', color: '#00f0ff', cursor: 'pointer', fontSize: '12px', fontWeight: '600' }}
+            >
+              ⚡ Architecture Spec
+            </button>
             <button 
               onClick={() => setCurrentView('workspace')} 
               style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: '12px' }}
