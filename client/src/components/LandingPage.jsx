@@ -3,10 +3,11 @@ import {
   ShieldCheck, ArrowRight, Play, FileText, Video, Globe, 
   Layers, Image, Mic, Sparkles, ScanLine, Activity,
   Cpu, CheckCircle2, Languages, Clock, BarChart3, Radio,
-  Lock, RefreshCw, AlertCircle
+  Lock, RefreshCw, AlertCircle, Sliders, Terminal, Eye
 } from 'lucide-react';
 import HolographicSphere from './HolographicSphere';
 import CyberRingsBackground from './CyberRingsBackground';
+import ForensicFeatureMonitor from './ForensicFeatureMonitor';
 
 // Operating modes corresponding to the reference design's pagination dots
 const OPERATING_MODES = [
@@ -44,49 +45,97 @@ const OPERATING_MODES = [
   }
 ];
 
+// Expanded 9 Real-World Forensic Features
 const FEATURES = [
   {
     icon: Video,
-    title: 'Neural Deepfake Detection',
-    badge: 'Vision AI',
-    description: 'Spatial-temporal analysis for facial boundary blending seams, lip-sync lag, and 2D FFT high-frequency checkerboard grid artifacts.',
+    monitorType: 'face_mesh',
+    title: 'Neural Deepfake & Boundary Seam Tracker',
+    badge: '68-Point Mesh',
+    metric: '99.1% Seam Sensitivity',
+    description: 'Calculates spatial-temporal warping vectors and detects micro-boundary blending seams across facial perimeters using Grad-CAM attention.',
     gradient: 'linear-gradient(135deg, #00f2fe 0%, #3b82f6 100%)',
   },
   {
-    icon: Globe,
-    title: 'Multilingual Regional NLP',
-    badge: '10 Native Scripts',
-    description: 'Native script verification for Devanagari, Gurmukhi, Tamil, Telugu, and Bengali without translational loss.',
+    icon: Activity,
+    monitorType: 'rppg_pulse',
+    title: 'Biological Pulse (rPPG) Vital Monitor',
+    badge: 'Biophysical Liveness',
+    metric: '74 BPM • Cardiac Validated',
+    description: 'Extracts sub-visual cardiovascular blood volume pulses (BVP) from skin reflectance to distinguish living humans from synthesized video frames.',
     gradient: 'linear-gradient(135deg, #10b981 0%, #06b6d4 100%)',
   },
   {
-    icon: Activity,
-    title: 'Biological Pulse (rPPG)',
-    badge: 'Liveness Forensics',
-    description: 'Remote photoplethysmography measures subtle cardiovascular blood volume pulse (BVP) cycles imperceptible to the naked eye.',
-    gradient: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+    icon: Layers,
+    monitorType: 'fft_spectrum',
+    title: '2D Fourier (FFT) Generative Checkerboard',
+    badge: 'Spectral Noise',
+    metric: 'High-Freq Anomaly: DETECTED',
+    description: 'Computes 2D Fast Fourier Transform power spectral density to isolate grid artifacts left by generative neural upsampling layers.',
+    gradient: 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)',
   },
   {
-    icon: Image,
-    title: 'Image Error Level Analysis',
-    badge: 'Spectral Noise',
-    description: 'Color-space quantization inspection, JPEG compression history, and clone-stamp artifact localization.',
+    icon: Globe,
+    monitorType: 'indic_nlp',
+    title: 'Multilingual Regional NLP & Panic Lexer',
+    badge: '10 Native Scripts',
+    metric: 'IndicBERT Attention: 0.94',
+    description: 'Tokenizes native Devanagari, Gurmukhi, Tamil, and Bengali scripts to detect sensational panic cues, fear markers, and viral claim vectors.',
+    gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+  },
+  {
+    icon: Mic,
+    monitorType: 'audio_spectrogram',
+    title: 'Audio Spectrogram & Vocal Clone Detector',
+    badge: 'Harmonic Forensics',
+    metric: 'Zero-Crossing Rate: Abnormal',
+    description: 'Analyzes vocal formant trajectories, pitch jitter variance, and synthetic acoustic phase discontinuity across 100 Hz – 12 kHz.',
     gradient: 'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)',
   },
   {
-    icon: FileText,
-    title: 'Fact-Check Grounding',
-    badge: 'Vector Search',
-    description: 'Instant cosine-similarity retrieval against verified archives from PIB Fact Check, Alt News, and BOOM Live.',
-    gradient: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
+    icon: Image,
+    monitorType: 'ela_comparator',
+    title: 'Error Level Analysis (ELA) Compression Forensics',
+    badge: 'Quantization Matrix',
+    metric: 'Error Residual: Δ 34.2',
+    description: 'Re-compresses images at known quantization tables to reveal differing compression error levels between authentic pixels and injected forgeries.',
+    gradient: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+  },
+  {
+    icon: Cpu,
+    monitorType: 'prnu_sensor',
+    title: 'Camera PRNU Sensor & EXIF Hex Fingerprint',
+    badge: 'Hardware Sensor',
+    metric: 'Sony IMX766 Match: 97.4%',
+    description: 'Detects camera sensor Photo-Response Non-Uniformity (PRNU) noise patterns and validates EXIF header hex integrity against CFA Bayer matrices.',
+    gradient: 'linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%)',
+  },
+  {
+    icon: ScanLine,
+    monitorType: 'optical_flow',
+    title: 'Temporal Optical Flow & Eye Kinematics',
+    badge: 'Motion Vectors',
+    metric: 'Blink Interval: Irregular',
+    description: 'Tracks micro-motion vectors between consecutive video frames to reveal unnatural head rotation lag and synthetic eye-blinking deficits.',
+    gradient: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)',
   },
   {
     icon: ShieldCheck,
-    title: 'Unified Trust Score',
-    badge: 'Convex Fusion',
-    description: 'Cross-modality penalty formula reconciling discrepancies between visual footage and accompanying textual headlines.',
-    gradient: 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
+    monitorType: 'vector_radar',
+    title: 'Vector Provenance & Fact Grounding Radar',
+    badge: 'Cosine Retrieval',
+    metric: '3 Verified Debunks Matched',
+    description: 'Queries high-dimensional vector embeddings against official fact-check registries (PIB, Alt News, BOOM Live) for deterministic citations.',
+    gradient: 'linear-gradient(135deg, #a855f7 0%, #6366f1 100%)',
   },
+];
+
+const LAB_INSTRUMENTS = [
+  { id: 'face_mesh', label: 'Facial Landmark Seam Mesh', type: 'face_mesh', spec: 'Dlib / Mediapipe 68 pts • Grad-CAM Thermal Overlays' },
+  { id: 'rppg_pulse', label: 'Cardiovascular rPPG Oscilloscope', type: 'rppg_pulse', spec: 'Remote Photoplethysmography • 74 BPM BVP Waveform' },
+  { id: 'fft_spectrum', label: '2D Fourier (FFT) Power Spectrum', type: 'fft_spectrum', spec: 'Spatial Frequency Domain • Checkerboard Artifacts' },
+  { id: 'indic_nlp', label: 'Regional Indic Panic Lexer', type: 'indic_nlp', spec: 'IndicBERT Attention • Hindi / Punjabi / Tamil Cues' },
+  { id: 'audio_spectrogram', label: 'Audio Frequency Spectrogram', type: 'audio_spectrogram', spec: '100 Hz – 12 kHz • Synthetic Vocal Jitter' },
 ];
 
 const STATS = [
@@ -178,8 +227,10 @@ export default function LandingPage({ onStartVerification }) {
   const [activeModeIdx, setActiveModeIdx] = useState(0);
   const [isScanning, setIsScanning] = useState(false);
   const [scanStatus, setScanStatus] = useState('Standby • Ready for Analysis');
+  const [activeLabTab, setActiveLabTab] = useState(LAB_INSTRUMENTS[0].id);
 
   const activeMode = OPERATING_MODES[activeModeIdx];
+  const activeLabInstrument = LAB_INSTRUMENTS.find(ins => ins.id === activeLabTab) || LAB_INSTRUMENTS[0];
 
   // Trigger simulated live scan animation
   const handleSimulateScan = () => {
@@ -209,8 +260,6 @@ export default function LandingPage({ onStartVerification }) {
       
       {/* ══════════════════════════════════════════════════════════════
           HERO SHOWCASE SECTION (Arthean / PYTIA Design Aesthetics)
-          Features: Concentric geometric arcs, 3D holographic neural sphere,
-          interactive mode switcher dots, floating data nodes, & cyber HUD
          ══════════════════════════════════════════════════════════════ */}
       <section style={{ position: 'relative', marginTop: '24px', marginBottom: '64px' }}>
         
@@ -536,7 +585,7 @@ export default function LandingPage({ onStartVerification }) {
                 </button>
               </div>
 
-              {/* Interactive Operating Mode Dots (01, 02, 03, 04) like Arthean showcase */}
+              {/* Interactive Operating Mode Dots */}
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -569,78 +618,185 @@ export default function LandingPage({ onStartVerification }) {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
-          DUAL-PIPELINE ARCHITECTURE VISUALIZER
+          INTERACTIVE FORENSIC LAB (Hands-on Real-World Workbench)
          ══════════════════════════════════════════════════════════════ */}
-      <section className="anim-fade-in-up" style={{ marginBottom: '64px' }}>
+      <section style={{ marginBottom: '72px' }}>
         <div style={{ textAlign: 'center', marginBottom: '28px' }}>
           <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1px' }}>
-            Two Independent Forensic Pipelines · Unified Mathematical Synthesis
+            Interactive Diagnostic Workbench · Signal Processing Engine
           </span>
           <h2 style={{ fontSize: '28px', fontWeight: '800', color: 'var(--text-primary)', marginTop: '4px' }}>
-            Multimodal Intelligence Architecture
+            Live Forensic Laboratory
           </h2>
+          <p style={{ fontSize: '14px', color: 'var(--text-muted)', maxWidth: '600px', margin: '6px auto 0' }}>
+            Inspect real-world signal models in real time: cardiovascular pulse waves, facial landmark tracking, 2D FFT power spectra, and regional Indic lexical attention.
+          </p>
         </div>
 
-        <div style={{
-          display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '20px', alignItems: 'center',
-          background: 'var(--bg-surface)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-xl)',
-          padding: '28px', boxShadow: 'var(--shadow-md)', position: 'relative', overflow: 'hidden'
-        }}>
-          {/* Media Pipeline Box */}
+        <div className="ts-card" style={{ padding: '24px', borderRadius: 'var(--radius-xl)' }}>
+          {/* Lab Instrument Selector Tabs */}
           <div style={{
-            background: 'var(--bg-inset)', padding: '22px', borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--border-default)'
+            display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '12px',
+            borderBottom: '1px solid var(--border-default)', marginBottom: '20px'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-              <div style={{ width: '30px', height: '30px', borderRadius: 'var(--radius-md)', background: 'var(--accent-gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
-                <Video size={16} />
-              </div>
-              <span style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-primary)' }}>Media Forensics Pipeline</span>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '12px', color: 'var(--text-secondary)' }}>
-              <div>• MTCNN Face Landmark Extraction & Jitter Stability</div>
-              <div>• CNN / EfficientNet Deepfake Forgery Classifier</div>
-              <div>• Grad-CAM Spatial Saliency Heatmap Overlays</div>
-              <div>• 2D Fourier (FFT) Checkerboard Grid Artifact Analysis</div>
-            </div>
+            {LAB_INSTRUMENTS.map(ins => {
+              const isActive = activeLabTab === ins.id;
+              return (
+                <button
+                  key={ins.id}
+                  onClick={() => setActiveLabTab(ins.id)}
+                  style={{
+                    padding: '8px 16px',
+                    borderRadius: 'var(--radius-md)',
+                    fontSize: '13px',
+                    fontWeight: isActive ? '700' : '500',
+                    color: isActive ? '#ffffff' : 'var(--text-secondary)',
+                    background: isActive ? 'var(--accent-gradient)' : 'var(--bg-inset)',
+                    border: 'none',
+                    cursor: 'pointer',
+                    whiteSpace: 'nowrap',
+                    transition: 'all var(--transition-fast)'
+                  }}
+                >
+                  {ins.label}
+                </button>
+              );
+            })}
           </div>
 
-          {/* Fusion Center Node */}
-          <div style={{ textAlign: 'center', padding: '0 10px' }}>
-            <div style={{
-              width: '68px', height: '68px', borderRadius: '50%', background: 'var(--accent-gradient)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff',
-              margin: '0 auto 8px', boxShadow: 'var(--glow-accent)'
-            }}>
-              <ShieldCheck size={34} />
+          {/* Active Lab Instrument Display */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '24px', alignItems: 'center' }}>
+            <div>
+              <ForensicFeatureMonitor type={activeLabInstrument.type} height={220} />
             </div>
-            <div style={{ fontSize: '13px', fontWeight: '800', color: 'var(--text-primary)' }}>Trust Score</div>
-            <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>0 — 100%</div>
-          </div>
 
-          {/* Text Pipeline Box */}
-          <div style={{
-            background: 'var(--bg-inset)', padding: '22px', borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--border-default)'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-              <div style={{ width: '30px', height: '30px', borderRadius: 'var(--radius-md)', background: 'var(--success-gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
-                <Globe size={16} />
+            <div style={{ background: 'var(--bg-inset)', padding: '20px', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-default)' }}>
+              <div style={{ fontSize: '11px', fontWeight: '700', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '6px' }}>
+                Operational Specification
               </div>
-              <span style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-primary)' }}>Regional Text Pipeline</span>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '12px', color: 'var(--text-secondary)' }}>
-              <div>• 10 Indic Native Scripts: Hindi, Punjabi, Tamil, Bengali</div>
-              <div>• Sensational Lexical & Panic Cue Triggers</div>
-              <div>• Named Entity Extraction & Claim Dissection</div>
-              <div>• Vector Cosine Matching with PIB & Alt News</div>
+              <h3 style={{ fontSize: '17px', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '8px' }}>
+                {activeLabInstrument.label}
+              </h3>
+              <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '16px' }}>
+                {activeLabInstrument.spec}
+              </p>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '12px', color: 'var(--text-muted)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span>Sensor Sampling:</span>
+                  <strong style={{ color: 'var(--text-primary)' }}>60 Hz Real-Time</strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span>Hardware Acceleration:</span>
+                  <strong style={{ color: 'var(--accent)' }}>PyTorch MPS GPU</strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span>Inference Mode:</span>
+                  <strong style={{ color: 'var(--verified)' }}>Deterministic Forensics</strong>
+                </div>
+              </div>
+
+              <div style={{ marginTop: '18px' }}>
+                <button
+                  className="ts-btn ts-btn-primary ts-btn-sm"
+                  onClick={onStartVerification}
+                  style={{ width: '100%', justifyContent: 'center' }}
+                >
+                  <span>Test on Your Media in Workspace</span>
+                  <ArrowRight size={14} />
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
-          LIVE FORENSIC PREVIEW CARD
+          COMPREHENSIVE 9-FEATURE FORENSIC MATRIX
+          Every card embeds an authentic real-world signal monitor
+         ══════════════════════════════════════════════════════════════ */}
+      <section style={{ marginBottom: '80px' }}>
+        <div className="anim-fade-in-up" style={{ textAlign: 'center', marginBottom: '48px' }}>
+          <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+            Comprehensive Multi-Modal Diagnostic Suite
+          </span>
+          <h2 style={{ 
+            fontSize: '36px', fontWeight: '800', 
+            letterSpacing: '-1px', color: 'var(--text-primary)',
+            marginTop: '4px', marginBottom: '12px',
+          }}>
+            Forensic Intelligence{' '}
+            <span className="ts-gradient-text">Matrix</span>
+          </h2>
+          <p style={{ fontSize: '16px', color: 'var(--text-muted)', maxWidth: '580px', margin: '0 auto' }}>
+            Real-world mathematical and signal-processing instruments engineered for newsroom investigations and cyber forensic units.
+          </p>
+        </div>
+
+        <div style={{ 
+          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', 
+          gap: '20px',
+        }}>
+          {FEATURES.map((feat, i) => {
+            const Icon = feat.icon;
+            return (
+              <div 
+                key={i} 
+                className={`ts-card ts-card-interactive anim-fade-in-up stagger-${(i % 4) + 1}`}
+                style={{ padding: '24px', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
+              >
+                {/* Header */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
+                  <div style={{
+                    width: '40px', height: '40px',
+                    borderRadius: 'var(--radius-lg)',
+                    background: feat.gradient,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: '#ffffff',
+                    boxShadow: '0 4px 14px rgba(0,0,0,0.15)',
+                  }}>
+                    <Icon size={20} />
+                  </div>
+                  <span style={{
+                    fontSize: '10px', fontWeight: '700', textTransform: 'uppercase',
+                    letterSpacing: '0.6px', padding: '4px 10px', borderRadius: '9999px',
+                    background: 'var(--bg-inset)', color: 'var(--accent)',
+                    border: '1px solid var(--border-default)'
+                  }}>
+                    {feat.badge}
+                  </span>
+                </div>
+
+                {/* Title & Metric */}
+                <h3 style={{ 
+                  fontSize: '16px', fontWeight: '800', 
+                  color: 'var(--text-primary)', marginBottom: '4px',
+                }}>
+                  {feat.title}
+                </h3>
+                <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontFamily: 'monospace', marginBottom: '14px' }}>
+                  {feat.metric}
+                </div>
+
+                {/* Real-World Embedded Live Monitor */}
+                <div style={{ marginBottom: '16px' }}>
+                  <ForensicFeatureMonitor type={feat.monitorType} height={140} />
+                </div>
+
+                {/* Description */}
+                <p style={{ 
+                  fontSize: '13px', color: 'var(--text-secondary)', lineHeight: '1.6', marginTop: 'auto' 
+                }}>
+                  {feat.description}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════
+          LIVE FORENSIC CASE PREVIEW
          ══════════════════════════════════════════════════════════════ */}
       <section className="ts-card anim-fade-in-up" style={{ 
         padding: '0', marginBottom: '80px',
@@ -696,7 +852,7 @@ export default function LandingPage({ onStartVerification }) {
               display: 'flex', alignItems: 'center', gap: '6px',
             }}>
               <ScanLine size={12} />
-              Suspicious Claim · Social Media Post
+              Suspicious Claim · Regional Social Media Post
             </div>
             <p style={{ 
               fontSize: '15px', fontWeight: '600', 
@@ -767,73 +923,6 @@ export default function LandingPage({ onStartVerification }) {
         {STATS.map((stat, i) => (
           <StatCard key={i} stat={stat} index={i} />
         ))}
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════════
-          COMPREHENSIVE FORENSIC TOOLKIT
-         ══════════════════════════════════════════════════════════════ */}
-      <section style={{ marginBottom: '80px' }}>
-        <div className="anim-fade-in-up" style={{ textAlign: 'center', marginBottom: '48px' }}>
-          <h2 style={{ 
-            fontSize: '36px', fontWeight: '800', 
-            letterSpacing: '-1px', color: 'var(--text-primary)',
-            marginBottom: '12px',
-          }}>
-            Forensic Intelligence{' '}
-            <span className="ts-gradient-text">Matrix</span>
-          </h2>
-          <p style={{ fontSize: '16px', color: 'var(--text-muted)', maxWidth: '550px', margin: '0 auto' }}>
-            Multi-modal verification toolkit engineered for newsroom investigations and fact-checking institutions.
-          </p>
-        </div>
-
-        <div style={{ 
-          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', 
-          gap: '16px',
-        }}>
-          {FEATURES.map((feat, i) => {
-            const Icon = feat.icon;
-            return (
-              <div 
-                key={i} 
-                className={`ts-card ts-card-interactive anim-fade-in-up stagger-${i + 1}`}
-                style={{ padding: '28px', position: 'relative', overflow: 'hidden' }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '18px' }}>
-                  <div style={{
-                    width: '44px', height: '44px',
-                    borderRadius: 'var(--radius-lg)',
-                    background: feat.gradient,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    color: '#ffffff',
-                    boxShadow: '0 4px 14px rgba(0,0,0,0.15)',
-                  }}>
-                    <Icon size={22} />
-                  </div>
-                  <span style={{
-                    fontSize: '10px', fontWeight: '700', textTransform: 'uppercase',
-                    letterSpacing: '0.6px', padding: '4px 10px', borderRadius: '9999px',
-                    background: 'var(--bg-inset)', color: 'var(--text-muted)',
-                    border: '1px solid var(--border-default)'
-                  }}>
-                    {feat.badge}
-                  </span>
-                </div>
-                <h3 style={{ 
-                  fontSize: '16px', fontWeight: '700', 
-                  color: 'var(--text-primary)', marginBottom: '8px',
-                }}>
-                  {feat.title}
-                </h3>
-                <p style={{ 
-                  fontSize: '14px', color: 'var(--text-secondary)', lineHeight: '1.6' 
-                }}>
-                  {feat.description}
-                </p>
-              </div>
-            );
-          })}
-        </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════════

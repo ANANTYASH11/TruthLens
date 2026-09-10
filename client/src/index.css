@@ -939,6 +939,12 @@ button { font-family: inherit; }
   100% { transform: translateY(100%); opacity: 0; }
 }
 
+@keyframes scanBeam {
+  0% { left: 0%; opacity: 0.2; }
+  50% { opacity: 1; }
+  100% { left: 100%; opacity: 0.2; }
+}
+
 .ts-futuristic-card {
   background: linear-gradient(145deg, rgba(16, 20, 36, 0.92) 0%, rgba(9, 11, 20, 0.96) 100%);
   border: 1px solid rgba(139, 92, 246, 0.25);
