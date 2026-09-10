@@ -1,0 +1,25 @@
+{
+  "gym_name": "GeneratorDetectorGym-v1",
+  "generator": {
+    "stylegan3": {
+      "truncation_psi": 0.7,
+      "resolution": 1024,
+      "latent_dim": 512
+    },
+    "stable_diffusion_3": {
+      "guidance_scale": 7.5,
+      "num_inference_steps": 30,
+      "inversion_strength": 0.35
+    }
+  },
+  "detector": {
+    "model_name": "DFA-ViT-Huge",
+    "defense_mode": "adaptive_rl",
+    "confidence_threshold": 0.85
+  },
+  "omniverse_settings": {
+    "enable_raytracing": true,
+    "environment_maps": ["studio_hdri_01", "outdoor_sun_02"],
+    "head_pose_jitter": 0.05
+  }
+}

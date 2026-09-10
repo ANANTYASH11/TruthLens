@@ -1,0 +1,57 @@
+# DFA Training Configuration
+project_name: "DeepFake-Forensic-Analyzer"
+version: "1.0.0"
+
+hardware:
+  device: "cuda"  # auto-detected cuda / mps / cpu
+  precision: "bfloat16"
+  target_gpu: "NVIDIA RTX 4060"
+
+model:
+  vit_backbone: "vit_huge_patch14_224"
+  img_size: 224
+  in_channels: 3
+  embed_dim: 1280
+  spectral_bands: 128
+  num_classes: 2  # 0: Real, 1: Fake
+
+modalities:
+  rgb: true
+  fft_frequency: true
+  dct_residual: true
+  rppg_bvp: true
+  prnu_noise: true
+  nerf_lighting: true
+
+rl_agents:
+  ppo_attention:
+    lr: 0.0003
+    gamma: 0.99
+    clip_range: 0.2
+    target_regions: ["eyes", "mouth", "skin_cheeks"]
+  ppo_ensemble:
+    lr: 0.0001
+    initial_weights:
+      vit: 0.45
+      xception_timesformer: 0.32
+      neuralhash_prnu: 0.23
+
+loss_weights:
+  focal_loss: 0.5
+  rl_loss: 0.3
+  rppg_loss: 0.2
+
+hyperparameters:
+  batch_size: 4
+  grad_accum: 8
+  learning_rate: 5.0e-6
+  optimizer: "LionW"
+  scheduler: "cosine_decay"
+  num_epochs: 100
+  sample_fps: 1
+
+dataset:
+  train_split: 0.8
+  val_split: 0.1
+  test_split: 0.1
+  data_dir: "data/raw"

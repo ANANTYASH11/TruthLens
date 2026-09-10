@@ -1,0 +1,931 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ============================================================
+   TRUTHSCAN — Premium Forensic Intelligence Design System
+   "Investigative Newsroom × Cybersecurity Forensics × Modern Editorial Software"
+   ============================================================ */
+
+:root {
+  /* ── Background Surfaces ── */
+  --bg-body: #fafafa;
+  --bg-surface: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-inset: #f4f5f7;
+  --bg-hover: #f0f1f3;
+  --bg-active: #e8eaed;
+  --bg-sidebar: #1b1f27;
+  --bg-sidebar-hover: #272c36;
+  --bg-sidebar-active: #323842;
+  --bg-overlay: rgba(0, 0, 0, 0.45);
+
+  /* ── Text ── */
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  --text-inverse: #f9fafb;
+  --text-sidebar: #d1d5db;
+  --text-sidebar-active: #ffffff;
+
+  /* ── Borders ── */
+  --border-default: #e5e7eb;
+  --border-strong: #d1d5db;
+  --border-focus: #3b82f6;
+
+  /* ── Brand Accent (Restrained Blue) ── */
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-light: #eff6ff;
+  --accent-border: #bfdbfe;
+
+  /* ── Premium Gradients ── */
+  --accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+  --accent-gradient-hover: linear-gradient(135deg, #1d4ed8 0%, #6d28d9 100%);
+  --accent-gradient-subtle: linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(124,58,237,0.08) 100%);
+  --danger-gradient: linear-gradient(135deg, #dc2626 0%, #e11d48 100%);
+  --success-gradient: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+  --warning-gradient: linear-gradient(135deg, #d97706 0%, #ea580c 100%);
+  --hero-mesh: radial-gradient(ellipse at 20% 50%, rgba(37,99,235,0.08) 0%, transparent 50%),
+               radial-gradient(ellipse at 80% 20%, rgba(124,58,237,0.06) 0%, transparent 50%),
+               radial-gradient(ellipse at 50% 80%, rgba(14,165,233,0.05) 0%, transparent 50%);
+
+  /* ── Glow Effects ── */
+  --glow-accent: 0 0 20px rgba(37,99,235,0.15), 0 0 60px rgba(37,99,235,0.05);
+  --glow-accent-strong: 0 0 20px rgba(37,99,235,0.25), 0 0 60px rgba(37,99,235,0.1);
+  --glow-danger: 0 0 20px rgba(220,38,38,0.15), 0 0 60px rgba(220,38,38,0.05);
+  --glow-success: 0 0 20px rgba(5,150,105,0.15), 0 0 60px rgba(5,150,105,0.05);
+  --glow-warning: 0 0 20px rgba(217,119,6,0.15), 0 0 60px rgba(217,119,6,0.05);
+
+  /* ── Semantic: Verification Status ── */
+  --verified: #059669;
+  --verified-bg: #ecfdf5;
+  --verified-border: #a7f3d0;
+  --verified-text: #065f46;
+
+  --misleading: #d97706;
+  --misleading-bg: #fffbeb;
+  --misleading-border: #fde68a;
+  --misleading-text: #92400e;
+
+  --false: #dc2626;
+  --false-bg: #fef2f2;
+  --false-border: #fecaca;
+  --false-text: #991b1b;
+
+  --info: #2563eb;
+  --info-bg: #eff6ff;
+  --info-border: #bfdbfe;
+  --info-text: #1e40af;
+
+  --unverified: #6b7280;
+  --unverified-bg: #f9fafb;
+  --unverified-border: #e5e7eb;
+  --unverified-text: #374151;
+
+  /* ── Spacing (8px grid) ── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* ── Radius ── */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ── */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.03);
+  --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.03);
+  --shadow-focus: 0 0 0 3px rgba(37, 99, 235, 0.15);
+
+  /* ── Typography ── */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* ── Transitions ── */
+  --transition-fast: 120ms ease;
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ── Layout ── */
+  --sidebar-width: 240px;
+  --header-height: 56px;
+  --max-content: 1200px;
+
+  /* ── Glass ── */
+  --glass-bg: rgba(255,255,255,0.7);
+  --glass-border: rgba(255,255,255,0.3);
+  --glass-blur: 16px;
+}
+
+/* ── Dark Theme ── */
+[data-theme="dark"] {
+  --bg-body: #0a0c10;
+  --bg-surface: #12151c;
+  --bg-elevated: #1a1e28;
+  --bg-inset: #0e1018;
+  --bg-hover: #1e2230;
+  --bg-active: #282d3a;
+  --bg-sidebar: #08090d;
+  --bg-sidebar-hover: #12151c;
+  --bg-sidebar-active: #1a1e28;
+
+  --text-primary: #f1f3f5;
+  --text-secondary: #a0a8b8;
+  --text-muted: #5c6478;
+  --text-inverse: #111827;
+
+  --border-default: #1e2230;
+  --border-strong: #2a3040;
+
+  --accent-light: rgba(37, 99, 235, 0.1);
+  --accent-border: rgba(37, 99, 235, 0.25);
+
+  --accent-gradient-subtle: linear-gradient(135deg, rgba(37,99,235,0.12) 0%, rgba(124,58,237,0.12) 100%);
+  --hero-mesh: radial-gradient(ellipse at 20% 50%, rgba(37,99,235,0.12) 0%, transparent 50%),
+               radial-gradient(ellipse at 80% 20%, rgba(124,58,237,0.10) 0%, transparent 50%),
+               radial-gradient(ellipse at 50% 80%, rgba(14,165,233,0.08) 0%, transparent 50%);
+
+  --glow-accent: 0 0 25px rgba(37,99,235,0.2), 0 0 80px rgba(37,99,235,0.08);
+  --glow-accent-strong: 0 0 30px rgba(37,99,235,0.35), 0 0 80px rgba(37,99,235,0.15);
+  --glow-danger: 0 0 25px rgba(220,38,38,0.2), 0 0 80px rgba(220,38,38,0.08);
+  --glow-success: 0 0 25px rgba(5,150,105,0.2), 0 0 80px rgba(5,150,105,0.08);
+  --glow-warning: 0 0 25px rgba(217,119,6,0.2), 0 0 80px rgba(217,119,6,0.08);
+
+  --verified-bg: rgba(5, 150, 105, 0.1);
+  --verified-border: rgba(5, 150, 105, 0.25);
+  --verified-text: #34d399;
+
+  --misleading-bg: rgba(217, 119, 6, 0.1);
+  --misleading-border: rgba(217, 119, 6, 0.25);
+  --misleading-text: #fbbf24;
+
+  --false-bg: rgba(220, 38, 38, 0.1);
+  --false-border: rgba(220, 38, 38, 0.25);
+  --false-text: #f87171;
+
+  --info-bg: rgba(37, 99, 235, 0.1);
+  --info-border: rgba(37, 99, 235, 0.25);
+  --info-text: #60a5fa;
+
+  --unverified-bg: rgba(107, 114, 128, 0.1);
+  --unverified-border: rgba(107, 114, 128, 0.25);
+  --unverified-text: #9ca3af;
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.4), 0 2px 4px -1px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.5), 0 4px 6px -2px rgba(0,0,0,0.3);
+  --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.5), 0 8px 10px -6px rgba(0,0,0,0.3);
+
+  --glass-bg: rgba(18,21,28,0.75);
+  --glass-border: rgba(255,255,255,0.06);
+}
+
+/* ── Reset & Base ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 14px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code, pre, .mono {
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+a:hover { color: var(--accent-hover); }
+
+img, video { max-width: 100%; display: block; }
+button { font-family: inherit; }
+
+/* ── Focus States (Accessibility) ── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   PREMIUM UTILITY CLASSES
+   ============================================================ */
+
+/* ── Glassmorphism ── */
+.ts-glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+}
+
+.ts-glass-strong {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(1.8);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  border: 1px solid var(--glass-border);
+}
+
+/* ── Gradient Text ── */
+.ts-gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Glow Utilities ── */
+.ts-glow-accent { box-shadow: var(--glow-accent); }
+.ts-glow-accent-strong { box-shadow: var(--glow-accent-strong); }
+.ts-glow-danger { box-shadow: var(--glow-danger); }
+.ts-glow-success { box-shadow: var(--glow-success); }
+.ts-glow-warning { box-shadow: var(--glow-warning); }
+
+/* ── Gradient Border (via pseudo-element trick) ── */
+.ts-border-gradient {
+  position: relative;
+  border: none !important;
+  background-clip: padding-box;
+}
+.ts-border-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--accent-gradient);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ── Hero Grid Background ── */
+.ts-hero-grid {
+  position: relative;
+}
+.ts-hero-grid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border-default) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-default) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.4;
+  -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+  mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+  pointer-events: none;
+}
+[data-theme="dark"] .ts-hero-grid::before {
+  opacity: 0.15;
+}
+
+/* ── Card ── */
+.ts-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-base), border-color var(--transition-base), transform var(--transition-base);
+}
+.ts-card:hover {
+  box-shadow: var(--shadow-md);
+}
+.ts-card-interactive:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  border-color: var(--accent-border);
+}
+.ts-card-flat {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+}
+
+/* ── Card with gradient top border ── */
+.ts-card-accent {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+.ts-card-accent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent-gradient);
+}
+
+/* ── Status Badges ── */
+.ts-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.ts-badge-verified {
+  background: var(--verified-bg);
+  color: var(--verified-text);
+  border: 1px solid var(--verified-border);
+}
+.ts-badge-misleading {
+  background: var(--misleading-bg);
+  color: var(--misleading-text);
+  border: 1px solid var(--misleading-border);
+}
+.ts-badge-false {
+  background: var(--false-bg);
+  color: var(--false-text);
+  border: 1px solid var(--false-border);
+}
+.ts-badge-info {
+  background: var(--info-bg);
+  color: var(--info-text);
+  border: 1px solid var(--info-border);
+}
+.ts-badge-unverified {
+  background: var(--unverified-bg);
+  color: var(--unverified-text);
+  border: 1px solid var(--unverified-border);
+}
+
+/* ── Buttons ── */
+.ts-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+.ts-btn:active {
+  transform: scale(0.97);
+}
+
+.ts-btn-primary {
+  background: var(--accent-gradient);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: var(--shadow-xs);
+}
+.ts-btn-primary:hover {
+  background: var(--accent-gradient-hover);
+  box-shadow: var(--glow-accent);
+  transform: translateY(-1px);
+}
+.ts-btn-primary:active {
+  transform: scale(0.97) translateY(0);
+}
+
+.ts-btn-secondary {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border-color: var(--border-default);
+}
+.ts-btn-secondary:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+}
+
+.ts-btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: transparent;
+}
+.ts-btn-ghost:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.ts-btn-danger {
+  background: var(--danger-gradient);
+  color: #ffffff;
+  border-color: transparent;
+}
+.ts-btn-danger:hover {
+  box-shadow: var(--glow-danger);
+  transform: translateY(-1px);
+}
+
+.ts-btn-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+.ts-btn-lg {
+  padding: 12px 24px;
+  font-size: 15px;
+  border-radius: var(--radius-lg);
+}
+
+/* ── Inputs ── */
+.ts-input {
+  width: 100%;
+  padding: 9px 12px;
+  font-size: 14px;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  outline: none;
+}
+.ts-input:focus {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-focus), var(--glow-accent);
+}
+.ts-input::placeholder {
+  color: var(--text-muted);
+}
+
+.ts-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.ts-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+/* ── Labels ── */
+.ts-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-1);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+/* ── Section Headers ── */
+.ts-section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+}
+.ts-section-subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-top: var(--space-1);
+}
+
+/* ── Tables ── */
+.ts-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.ts-table th {
+  text-align: left;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-default);
+  background: var(--bg-inset);
+}
+.ts-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-default);
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+.ts-table tr:hover td {
+  background: var(--bg-hover);
+}
+.ts-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ── Tabs ── */
+.ts-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border-default);
+}
+.ts-tab {
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ts-tab:hover {
+  color: var(--text-primary);
+}
+.ts-tab-active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}
+
+/* ── Progress / Meter ── */
+.ts-meter {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-inset);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.ts-meter-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+/* Shimmer effect on meter fills */
+.ts-meter-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.25) 50%,
+    transparent 100%
+  );
+  animation: shimmerSweep 2s ease-in-out infinite;
+}
+
+/* ── Divider ── */
+.ts-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border-default);
+  margin: var(--space-6) 0;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ============================================================
+   FORENSIC OVERLAY ELEMENTS
+   ============================================================ */
+
+/* Corner brackets — forensic viewport decoration */
+.ts-forensic-viewport {
+  position: relative;
+}
+.ts-forensic-viewport::before,
+.ts-forensic-viewport::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: rgba(59, 130, 246, 0.6);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 3;
+}
+.ts-forensic-viewport::before {
+  top: 8px; left: 8px;
+  border-width: 2px 0 0 2px;
+}
+.ts-forensic-viewport::after {
+  bottom: 8px; right: 8px;
+  border-width: 0 2px 2px 0;
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+
+/* Fade in from bottom — for page transitions & card stagger */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.anim-fade-in-up {
+  animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Fade in — simple reveal */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.anim-fade-in {
+  animation: fadeIn 0.3s ease both;
+}
+
+/* Scale in — modals, tooltips */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.anim-scale-in {
+  animation: scaleIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Slide in from right — for panels */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.anim-slide-right {
+  animation: slideInRight 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Scanning line — forensic signature animation */
+@keyframes scanLine {
+  0% { top: 0%; }
+  100% { top: 100%; }
+}
+.ts-scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%);
+  opacity: 0.6;
+  animation: scanLine 3s linear infinite;
+  pointer-events: none;
+}
+
+/* Pulse dot — live indicator */
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+.ts-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--verified);
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+/* Pulse ring — expanding ring for active items */
+@keyframes pulseRing {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+.ts-pulse-ring {
+  position: relative;
+}
+.ts-pulse-ring::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  border: 2px solid var(--accent);
+  animation: pulseRing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+/* Count-up number animation helper */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.anim-count-up {
+  animation: countUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Shimmer sweep — for progress bars and loading states */
+@keyframes shimmerSweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.anim-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.anim-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.15) 50%,
+    transparent 100%
+  );
+  animation: shimmerSweep 2s ease-in-out infinite;
+}
+
+/* Gradient border rotation */
+@keyframes borderRotate {
+  0% { --angle: 0deg; }
+  100% { --angle: 360deg; }
+}
+
+/* Float animation — subtle hover */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+.anim-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Glow pulse — for badges and highlights */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: var(--glow-accent); }
+  50% { box-shadow: var(--glow-accent-strong); }
+}
+.anim-glow-pulse {
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+/* Marching ants — for upload zones */
+@keyframes marchingAnts {
+  0% { background-position: 0 0; }
+  100% { background-position: 40px 0; }
+}
+
+/* Grid pattern fade-in */
+@keyframes gridFadeIn {
+  from { opacity: 0; }
+  to { opacity: 0.4; }
+}
+
+/* Stagger delay utilities */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+.stagger-6 { animation-delay: 0.3s; }
+.stagger-7 { animation-delay: 0.35s; }
+.stagger-8 { animation-delay: 0.4s; }
+
+/* Checkmark draw animation */
+@keyframes drawCheck {
+  from { stroke-dashoffset: 24; }
+  to { stroke-dashoffset: 0; }
+}
+.ts-check-anim {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: drawCheck 0.4s ease forwards;
+}
+
+/* Spinner */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.ts-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-default);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Progress bar fill animation */
+@keyframes progressFill {
+  from { width: 0%; }
+}
+.anim-progress {
+  animation: progressFill 1.2s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Icon spin (for active pipeline stages) */
+@keyframes iconSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.anim-icon-spin {
+  animation: iconSpin 2s linear infinite;
+}
+
+/* Subtle breathe — for ambient elements */
+@keyframes breathe {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+.anim-breathe {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  :root {
+    --sidebar-width: 0px;
+  }
+  .ts-hide-mobile {
+    display: none !important;
+  }
+}
+
+/* ── Print ── */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  .ts-no-print {
+    display: none !important;
+  }
+}
