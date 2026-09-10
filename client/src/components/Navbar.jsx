@@ -61,7 +61,7 @@ export default function Navbar({ currentView, setCurrentView, theme, toggleTheme
               fontSize: '15px', fontWeight: '800', 
               letterSpacing: '-0.3px', lineHeight: '1.2',
             }}>
-              <span className="ts-gradient-text">TRUTHSCAN</span>
+              <span className="ts-gradient-text">TRUTH LENS</span>
             </div>
             <div style={{ 
               fontSize: '10px', color: 'var(--text-muted)', 

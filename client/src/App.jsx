@@ -153,7 +153,7 @@ export default function App() {
           gap: '12px',
         }}>
           <div>
-            <strong style={{ color: 'var(--text-primary)' }}>TRUTHSCAN</strong> — AI-Assisted Media Verification Platform
+            <strong style={{ color: 'var(--text-primary)' }}>TRUTH LENS</strong> — AI-Assisted Media Verification Platform
           </div>
 
           <div style={{ display: 'flex', gap: '16px' }}>

@@ -50,7 +50,7 @@ export default function VerificationReport() {
                 <ShieldCheck size={18} style={{ color: '#fff' }} />
               </div>
             <span style={{ fontSize: '20px', fontWeight: '800', letterSpacing: '-0.3px' }}>
-              <span className="ts-gradient-text">TRUTHSCAN</span>
+              <span className="ts-gradient-text">TRUTH LENS</span>
             </span>
           </div>
           <h2 style={{ fontSize: '14px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '20px' }}>
@@ -58,7 +58,7 @@ export default function VerificationReport() {
           </h2>
           
           <div style={{ display: 'flex', justifyContent: 'center', gap: '32px', fontSize: '13px', color: 'var(--text-muted)' }}>
-            <div><strong>Case ID:</strong> <span style={{ fontFamily: 'var(--font-mono)' }}>TS-2026-008241</span></div>
+            <div><strong>Case ID:</strong> <span style={{ fontFamily: 'var(--font-mono)' }}>TL-2026-008241</span></div>
             <div><strong>Date:</strong> August 24, 2026</div>
           </div>
           
@@ -181,7 +181,7 @@ export default function VerificationReport() {
             5. Methodology
           </h3>
           <p style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '8px' }}>
-            This verification was performed using TRUTHSCAN's multi-stage forensic pipeline, which includes:
+            This verification was performed using Truth Lens's multi-stage forensic pipeline, which includes:
           </p>
           <ol style={{ paddingLeft: '20px', fontSize: '14px', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <li>Automated language detection and script identification</li>
@@ -199,7 +199,7 @@ export default function VerificationReport() {
           </h3>
           <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>
             This analysis is based on publicly available sources and automated pattern detection. Results should 
-            be evaluated alongside the cited evidence and original sources. TRUTHSCAN provides analytical assistance 
+            be evaluated alongside the cited evidence and original sources. Truth Lens provides analytical assistance 
             for content verification — it does not replace human editorial judgment.
           </p>
         </section>
@@ -210,7 +210,7 @@ export default function VerificationReport() {
           textAlign: 'center', fontSize: '12px', color: 'var(--text-muted)',
         }}>
           <p style={{ marginBottom: '4px' }}>
-            <strong>TRUTHSCAN</strong> — AI-Assisted Multilingual Verification Platform
+            <strong>TRUTH LENS</strong> — AI-Assisted Multilingual Verification Platform
           </p>
           <p>
             This report was generated automatically. Results should be evaluated alongside cited evidence and original sources.

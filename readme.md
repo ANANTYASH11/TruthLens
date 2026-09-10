@@ -1,6 +1,6 @@
-# DeepFake Forensic Analyzer (DFA)
+# Truth Lens
 
-A production-ready deepfake detection system optimized for NVIDIA RTX 4060. DFA combines Vision Transformers with advanced preprocessing for high-accuracy deepfake detection.
+**Truth Lens** is a production-ready AI forensic intelligence and media verification platform combining multi-modal AI, reinforcement learning (RL), biophysical validation, and an interactive verification workstation.
 
 ## Current Implementation Status
 
