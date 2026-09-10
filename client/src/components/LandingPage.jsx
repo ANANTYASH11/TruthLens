@@ -206,16 +206,18 @@ function StatCard({ stat, index }) {
         <Icon size={20} style={{ color: 'var(--accent)' }} />
       </div>
       <div style={{ 
-        fontSize: '32px', fontWeight: '800', 
-        letterSpacing: '-1px', lineHeight: '1',
+        fontSize: '26px', fontWeight: '700', 
+        letterSpacing: '-0.5px', lineHeight: '1',
+        fontFamily: 'var(--font-display)'
       }}>
         <span className="ts-gradient-text">
           {prefix}{animatedValue}{suffix}
         </span>
       </div>
       <div style={{ 
-        fontSize: '12px', color: 'var(--text-muted)', 
+        fontSize: '11px', color: 'var(--text-muted)', 
         marginTop: '6px', fontWeight: '500',
+        fontFamily: 'var(--font-mono)'
       }}>
         {stat.label}
       </div>
@@ -270,8 +272,8 @@ export default function LandingPage({ onStartVerification }) {
         <div 
           className="ts-futuristic-card"
           style={{
-            padding: '48px 40px',
-            minHeight: '560px',
+            padding: '32px 36px',
+            minHeight: '460px',
             display: 'flex',
             alignItems: 'center',
             position: 'relative',
@@ -281,69 +283,70 @@ export default function LandingPage({ onStartVerification }) {
           {/* Subtle Cyber Grid Texture */}
           <div style={{
             position: 'absolute', inset: 0,
-            backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px)`,
+            backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px)`,
             backgroundSize: '24px 24px',
-            opacity: 0.4,
+            opacity: 0.35,
             pointerEvents: 'none',
           }} />
 
           {/* Top Stage Bar */}
           <div style={{
-            position: 'absolute', top: '24px', left: '36px', right: '36px',
+            position: 'absolute', top: '18px', left: '32px', right: '32px',
             display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-            fontSize: '11px', color: 'rgba(255, 255, 255, 0.5)',
+            fontSize: '10.5px', color: 'rgba(255, 255, 255, 0.45)',
             letterSpacing: '1px', textTransform: 'uppercase',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-            paddingBottom: '14px',
+            fontFamily: 'var(--font-mono)',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+            paddingBottom: '12px',
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <div style={{
-                width: '8px', height: '8px', borderRadius: '50%',
+                width: '6px', height: '6px', borderRadius: '50%',
                 background: isScanning ? '#00f2fe' : '#10b981',
-                boxShadow: isScanning ? '0 0 10px #00f2fe' : '0 0 8px #10b981',
+                boxShadow: isScanning ? '0 0 8px #00f2fe' : '0 0 6px #10b981',
                 animation: 'pulseGlow 2s infinite',
               }} />
-              <span style={{ color: '#ffffff', fontWeight: '700' }}>TRUTHLENS A.I.</span>
-              <span style={{ color: 'rgba(255, 255, 255, 0.3)' }}>|</span>
-              <span>Autonomous Forensic Intelligence</span>
+              <span style={{ color: '#ffffff', fontWeight: '700' }}>TRUTHLENS // v2.5.0</span>
+              <span style={{ color: 'rgba(255, 255, 255, 0.25)' }}>/</span>
+              <span>AUTONOMOUS FORENSIC INTELLIGENCE</span>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <span className="ts-hide-mobile" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-                CORE: <strong style={{ color: '#38bdf8' }}>Apple Silicon MPS GPU</strong>
+              <span className="ts-hide-mobile" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+                CORE: <strong style={{ color: '#00f0ff' }}>Apple Silicon MPS GPU</strong>
               </span>
-              <span style={{ color: isScanning ? '#00f2fe' : 'rgba(255, 255, 255, 0.6)' }}>
+              <span style={{ color: isScanning ? '#00f2fe' : 'rgba(255, 255, 255, 0.5)' }}>
                 {scanStatus}
               </span>
             </div>
           </div>
 
-          {/* Main Hero Grid: 3D Hologram Left, Typography & Controls Right */}
+          {/* Main Hero Grid: Balanced 360px Sphere Left, Ultra-Minimalist Typography Right */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: '1.05fr 1fr',
+            gridTemplateColumns: '1fr 1fr',
             alignItems: 'center',
-            gap: '36px',
+            gap: '28px',
             width: '100%',
-            marginTop: '28px',
+            marginTop: '20px',
             position: 'relative',
           }}>
             
-            {/* ── LEFT: 3D Holographic Neural Sphere with Floating Forensic Badges ── */}
+            {/* ── LEFT: 3D Holographic Neural Sphere with Clean Floating Badges ── */}
             <div style={{
               position: 'relative',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              minHeight: '440px',
+              minHeight: '380px',
             }}>
               
-              {/* Interactive 3D Canvas Sphere */}
-              <div style={{ filter: 'drop-shadow(0 0 45px rgba(0, 242, 254, 0.25))' }}>
+              {/* Balanced 360px 3D Canvas Sphere */}
+              <div style={{ filter: 'drop-shadow(0 0 35px rgba(0, 242, 254, 0.22))' }}>
                 <HolographicSphere 
                   mode={activeModeIdx} 
                   isScanning={isScanning} 
-                  size={460}
+                  size={360}
                   onSphereClick={handleSimulateScan}
                 />
               </div>
@@ -353,13 +356,13 @@ export default function LandingPage({ onStartVerification }) {
                 className="ts-glass-pill"
                 style={{
                   position: 'absolute',
-                  top: '40px',
-                  left: '10px',
-                  padding: '8px 14px',
-                  borderRadius: '16px',
+                  top: '24px',
+                  left: '8px',
+                  padding: '6px 12px',
+                  borderRadius: '12px',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '10px',
+                  gap: '8px',
                   animation: 'floatSlow 6s ease-in-out infinite',
                   cursor: 'pointer',
                   zIndex: 2,
@@ -367,19 +370,19 @@ export default function LandingPage({ onStartVerification }) {
                 onClick={() => setActiveModeIdx(1)}
               >
                 <div style={{
-                  width: '28px', height: '28px', borderRadius: '50%',
+                  width: '24px', height: '24px', borderRadius: '50%',
                   background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: '#ffffff', boxShadow: '0 0 10px rgba(168, 85, 247, 0.4)'
+                  color: '#ffffff', boxShadow: '0 0 8px rgba(168, 85, 247, 0.4)'
                 }}>
-                  <Activity size={14} />
+                  <Activity size={12} />
                 </div>
                 <div>
-                  <div style={{ fontSize: '11px', fontWeight: '700', color: '#ffffff', letterSpacing: '0.2px' }}>
-                    rPPG Blood Pulse
+                  <div style={{ fontSize: '10.5px', fontWeight: '600', color: '#ffffff', fontFamily: 'var(--font-mono)' }}>
+                    rPPG Pulse Flow
                   </div>
-                  <div style={{ fontSize: '10px', color: '#c084fc' }}>
-                    Biological Liveness: 99.4%
+                  <div style={{ fontSize: '9.5px', color: '#c084fc', fontFamily: 'var(--font-mono)' }}>
+                    Liveness: 99.4%
                   </div>
                 </div>
               </div>
@@ -389,13 +392,13 @@ export default function LandingPage({ onStartVerification }) {
                 className="ts-glass-pill"
                 style={{
                   position: 'absolute',
-                  bottom: '30px',
-                  left: '20px',
-                  padding: '8px 14px',
-                  borderRadius: '16px',
+                  bottom: '20px',
+                  left: '12px',
+                  padding: '6px 12px',
+                  borderRadius: '12px',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '10px',
+                  gap: '8px',
                   animation: 'floatReverse 7s ease-in-out infinite',
                   cursor: 'pointer',
                   zIndex: 2,
@@ -403,19 +406,19 @@ export default function LandingPage({ onStartVerification }) {
                 onClick={() => setActiveModeIdx(2)}
               >
                 <div style={{
-                  width: '28px', height: '28px', borderRadius: '50%',
+                  width: '24px', height: '24px', borderRadius: '50%',
                   background: 'linear-gradient(135deg, #10b981 0%, #06b6d4 100%)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: '#ffffff', boxShadow: '0 0 10px rgba(16, 185, 129, 0.4)'
+                  color: '#ffffff', boxShadow: '0 0 8px rgba(16, 185, 129, 0.4)'
                 }}>
-                  <Languages size={14} />
+                  <Languages size={12} />
                 </div>
                 <div>
-                  <div style={{ fontSize: '11px', fontWeight: '700', color: '#ffffff', letterSpacing: '0.2px' }}>
+                  <div style={{ fontSize: '10.5px', fontWeight: '600', color: '#ffffff', fontFamily: 'var(--font-mono)' }}>
                     Indic Script NLP
                   </div>
-                  <div style={{ fontSize: '10px', color: '#34d399' }}>
-                    10 Native Alphabets
+                  <div style={{ fontSize: '9.5px', color: '#34d399', fontFamily: 'var(--font-mono)' }}>
+                    10 Native Scripts
                   </div>
                 </div>
               </div>
@@ -425,13 +428,13 @@ export default function LandingPage({ onStartVerification }) {
                 className="ts-glass-pill"
                 style={{
                   position: 'absolute',
-                  bottom: '70px',
-                  right: '15px',
-                  padding: '8px 14px',
-                  borderRadius: '16px',
+                  bottom: '40px',
+                  right: '12px',
+                  padding: '6px 12px',
+                  borderRadius: '12px',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '10px',
+                  gap: '8px',
                   animation: 'floatSlow 5s ease-in-out infinite',
                   cursor: 'pointer',
                   zIndex: 2,
@@ -439,132 +442,118 @@ export default function LandingPage({ onStartVerification }) {
                 onClick={() => setActiveModeIdx(0)}
               >
                 <div style={{
-                  width: '28px', height: '28px', borderRadius: '50%',
+                  width: '24px', height: '24px', borderRadius: '50%',
                   background: 'linear-gradient(135deg, #00f2fe 0%, #3b82f6 100%)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: '#ffffff', boxShadow: '0 0 10px rgba(0, 242, 254, 0.4)'
+                  color: '#ffffff', boxShadow: '0 0 8px rgba(0, 242, 254, 0.4)'
                 }}>
-                  <ShieldCheck size={15} />
+                  <ShieldCheck size={13} />
                 </div>
                 <div>
-                  <div style={{ fontSize: '11px', fontWeight: '700', color: '#ffffff', letterSpacing: '0.2px' }}>
+                  <div style={{ fontSize: '10.5px', fontWeight: '600', color: '#ffffff', fontFamily: 'var(--font-mono)' }}>
                     Fused Trust Index
                   </div>
-                  <div style={{ fontSize: '10px', color: '#38bdf8' }}>
-                    Dual-Pipeline Verified
+                  <div style={{ fontSize: '9.5px', color: '#00f0ff', fontFamily: 'var(--font-mono)' }}>
+                    Convex Synthesis
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* ── RIGHT: Futuristic Typography, Telemetry & Interactive Switcher ── */}
-            <div style={{ padding: '10px 0 10px 20px', zIndex: 2 }}>
+            {/* ── RIGHT: Ultra-Minimalist Statement & Delicate Micro-Copy ── */}
+            <div style={{ padding: '0 10px', zIndex: 2 }}>
               
-              {/* Active Mode Category Tag */}
+              {/* Category Micro-Badge */}
               <div style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '8px',
-                padding: '5px 14px',
+                gap: '6px',
+                padding: '3px 10px',
                 borderRadius: '9999px',
-                background: 'rgba(255, 255, 255, 0.06)',
-                border: '1px solid rgba(255, 255, 255, 0.12)',
-                fontSize: '11px',
-                fontWeight: '700',
-                color: '#38bdf8',
+                background: 'rgba(0, 240, 255, 0.08)',
+                border: '1px solid rgba(0, 240, 255, 0.25)',
+                fontSize: '10px',
+                fontWeight: '600',
+                color: '#00f0ff',
                 letterSpacing: '1px',
                 textTransform: 'uppercase',
-                marginBottom: '18px',
+                fontFamily: 'var(--font-mono)',
+                marginBottom: '14px',
               }}>
-                <Sparkles size={12} />
-                <span>{activeMode.badge}</span>
+                <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00f0ff', display: 'inline-block', boxShadow: '0 0 6px #00f0ff' }} />
+                <span>MODE {activeMode.number} // {activeMode.badge}</span>
               </div>
 
-              {/* Main Headline */}
+              {/* Single-Line Minimalist Statement */}
               <h1 style={{
-                fontSize: '44px',
-                fontWeight: '900',
-                lineHeight: '1.1',
-                letterSpacing: '-1.5px',
+                fontSize: '28px',
+                fontWeight: '600',
+                lineHeight: '1.3',
+                letterSpacing: '-0.5px',
                 color: '#ffffff',
-                marginBottom: '18px',
+                marginBottom: '14px',
+                fontFamily: 'var(--font-display)',
               }}>
                 Reinventing{' '}
                 <span style={{
-                  background: 'linear-gradient(90deg, #00f2fe 0%, #38bdf8 50%, #c084fc 100%)',
+                  background: 'linear-gradient(90deg, #00f0ff 0%, #38bdf8 50%, #c084fc 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                 }}>
-                  Truth
-                </span>
-                <br />
+                  truth
+                </span>{' '}
                 in the synthetic era.
               </h1>
 
-              {/* Refined Narrative */}
+              {/* Delicate Micro-Copy */}
               <p style={{
-                fontSize: '15px',
-                color: 'rgba(255, 255, 255, 0.72)',
-                lineHeight: '1.65',
-                marginBottom: '28px',
-                maxWidth: '480px',
+                fontSize: '13.5px',
+                color: 'rgba(255, 255, 255, 0.65)',
+                lineHeight: '1.7',
+                marginBottom: '20px',
+                maxWidth: '440px',
+                fontFamily: 'var(--font-sans)',
               }}>
-                An autonomous forensic intelligence engine uniting neural spatial-temporal forensics, 
-                2D Fourier spectra, and regional Indic language processing to verify media in milliseconds.
+                An autonomous forensic intelligence engine uniting neural vision, 
+                frequency spectra, and regional Indic language processing to verify media in milliseconds.
               </p>
 
-              {/* Active Mode Telemetry Capsule */}
+              {/* Compact Data-Dense Telemetry Row */}
               <div style={{
-                background: 'rgba(255, 255, 255, 0.04)',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                borderRadius: '16px',
-                padding: '14px 18px',
-                marginBottom: '28px',
-                display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
-                gap: '12px',
+                display: 'flex',
+                gap: '16px',
+                fontSize: '10.5px',
+                fontFamily: 'var(--font-mono)',
+                color: 'rgba(255, 255, 255, 0.5)',
+                marginBottom: '24px',
+                flexWrap: 'wrap',
+                background: 'rgba(0, 0, 0, 0.25)',
+                padding: '8px 14px',
+                borderRadius: '8px',
+                border: '1px solid rgba(255, 255, 255, 0.05)'
               }}>
-                <div>
-                  <div style={{ fontSize: '10px', color: 'rgba(255, 255, 255, 0.45)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    Accuracy
-                  </div>
-                  <div style={{ fontSize: '18px', fontWeight: '800', color: '#ffffff', marginTop: '2px' }}>
-                    {activeMode.stats.accuracy}
-                  </div>
-                </div>
-                <div>
-                  <div style={{ fontSize: '10px', color: 'rgba(255, 255, 255, 0.45)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    Latency
-                  </div>
-                  <div style={{ fontSize: '18px', fontWeight: '800', color: '#00f2fe', marginTop: '2px' }}>
-                    {activeMode.stats.latency}
-                  </div>
-                </div>
-                <div>
-                  <div style={{ fontSize: '10px', color: 'rgba(255, 255, 255, 0.45)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    Core Architecture
-                  </div>
-                  <div style={{ fontSize: '11px', fontWeight: '700', color: '#c084fc', marginTop: '6px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    {activeMode.stats.target}
-                  </div>
-                </div>
+                <span>ACCURACY: <strong style={{ color: '#ffffff' }}>{activeMode.stats.accuracy}</strong></span>
+                <span>LATENCY: <strong style={{ color: '#00f0ff' }}>{activeMode.stats.latency}</strong></span>
+                <span>MODEL: <strong style={{ color: '#c084fc' }}>{activeMode.stats.target}</strong></span>
               </div>
 
-              {/* CTA Buttons */}
-              <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', alignItems: 'center', marginBottom: '32px' }}>
+              {/* Compact Action Buttons */}
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center', marginBottom: '24px' }}>
                 <button 
                   className="ts-cyber-btn"
                   onClick={onStartVerification}
                   style={{
-                    padding: '12px 28px',
-                    fontSize: '14px',
+                    padding: '10px 22px',
+                    fontSize: '13px',
+                    fontWeight: '600',
+                    fontFamily: 'var(--font-display)',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '8px',
                   }}
                 >
                   <span>Launch Workspace</span>
-                  <ArrowRight size={16} />
+                  <ArrowRight size={15} />
                 </button>
 
                 <button 
@@ -572,26 +561,27 @@ export default function LandingPage({ onStartVerification }) {
                   onClick={handleSimulateScan}
                   disabled={isScanning}
                   style={{
-                    padding: '12px 22px',
-                    fontSize: '14px',
+                    padding: '10px 18px',
+                    fontSize: '13px',
+                    fontFamily: 'var(--font-display)',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '8px',
                     opacity: isScanning ? 0.6 : 1,
                   }}
                 >
-                  <ScanLine size={16} style={{ color: '#00f2fe' }} />
+                  <ScanLine size={15} style={{ color: '#00f0ff' }} />
                   <span>{isScanning ? 'Scanning Orbit...' : 'Simulate Scan'}</span>
                 </button>
               </div>
 
-              {/* Interactive Operating Mode Dots */}
+              {/* Clean Operating Mode Dots (Matching Arthean Reference Layout) */}
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '18px',
-                borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-                paddingTop: '18px',
+                gap: '16px',
+                borderTop: '1px solid rgba(255, 255, 255, 0.06)',
+                paddingTop: '16px',
               }}>
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                   {OPERATING_MODES.map((modeItem, idx) => (
@@ -604,9 +594,9 @@ export default function LandingPage({ onStartVerification }) {
                   ))}
                 </div>
 
-                <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.6)', display: 'flex', gap: '8px' }}>
-                  <strong style={{ color: '#ffffff' }}>{activeMode.number}</strong>
-                  <span>{activeMode.title}</span>
+                <div style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.5)', fontFamily: 'var(--font-mono)', display: 'flex', gap: '6px' }}>
+                  <strong style={{ color: '#00f0ff' }}>{activeMode.number}</strong>
+                  <span>// {activeMode.title}</span>
                 </div>
               </div>
 
@@ -621,14 +611,14 @@ export default function LandingPage({ onStartVerification }) {
           INTERACTIVE FORENSIC LAB (Hands-on Real-World Workbench)
          ══════════════════════════════════════════════════════════════ */}
       <section style={{ marginBottom: '72px' }}>
-        <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-          <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+          <span style={{ fontSize: '10.5px', fontWeight: '600', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1px', fontFamily: 'var(--font-mono)' }}>
             Interactive Diagnostic Workbench · Signal Processing Engine
           </span>
-          <h2 style={{ fontSize: '28px', fontWeight: '800', color: 'var(--text-primary)', marginTop: '4px' }}>
+          <h2 style={{ fontSize: '22px', fontWeight: '600', color: 'var(--text-primary)', marginTop: '4px', letterSpacing: '-0.3px', fontFamily: 'var(--font-display)' }}>
             Live Forensic Laboratory
           </h2>
-          <p style={{ fontSize: '14px', color: 'var(--text-muted)', maxWidth: '600px', margin: '6px auto 0' }}>
+          <p style={{ fontSize: '12.5px', color: 'var(--text-muted)', maxWidth: '560px', margin: '6px auto 0' }}>
             Inspect real-world signal models in real time: cardiovascular pulse waves, facial landmark tracking, 2D FFT power spectra, and regional Indic lexical attention.
           </p>
         </div>
@@ -716,19 +706,20 @@ export default function LandingPage({ onStartVerification }) {
           Every card embeds an authentic real-world signal monitor
          ══════════════════════════════════════════════════════════════ */}
       <section style={{ marginBottom: '80px' }}>
-        <div className="anim-fade-in-up" style={{ textAlign: 'center', marginBottom: '48px' }}>
-          <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1px' }}>
+        <div className="anim-fade-in-up" style={{ textAlign: 'center', marginBottom: '36px' }}>
+          <span style={{ fontSize: '10.5px', fontWeight: '600', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1px', fontFamily: 'var(--font-mono)' }}>
             Comprehensive Multi-Modal Diagnostic Suite
           </span>
           <h2 style={{ 
-            fontSize: '36px', fontWeight: '800', 
-            letterSpacing: '-1px', color: 'var(--text-primary)',
-            marginTop: '4px', marginBottom: '12px',
+            fontSize: '24px', fontWeight: '600', 
+            letterSpacing: '-0.4px', color: 'var(--text-primary)',
+            marginTop: '4px', marginBottom: '8px',
+            fontFamily: 'var(--font-display)'
           }}>
             Forensic Intelligence{' '}
             <span className="ts-gradient-text">Matrix</span>
           </h2>
-          <p style={{ fontSize: '16px', color: 'var(--text-muted)', maxWidth: '580px', margin: '0 auto' }}>
+          <p style={{ fontSize: '13px', color: 'var(--text-muted)', maxWidth: '520px', margin: '0 auto' }}>
             Real-world mathematical and signal-processing instruments engineered for newsroom investigations and cyber forensic units.
           </p>
         </div>
@@ -769,8 +760,9 @@ export default function LandingPage({ onStartVerification }) {
 
                 {/* Title & Metric */}
                 <h3 style={{ 
-                  fontSize: '16px', fontWeight: '800', 
+                  fontSize: '14.5px', fontWeight: '600', 
                   color: 'var(--text-primary)', marginBottom: '4px',
+                  fontFamily: 'var(--font-display)', letterSpacing: '-0.2px'
                 }}>
                   {feat.title}
                 </h3>
