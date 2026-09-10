@@ -4,7 +4,7 @@
  * with graceful fallback simulation if the server is offline.
  */
 
-const API_BASE_URL = 'http://localhost:5050/api';
+const API_BASE_URL = typeof window !== 'undefined' && window.location.port === '3000' ? '/api' : 'http://localhost:5050/api';
 
 export async function checkHealth() {
   try {
