@@ -1,13 +1,11 @@
 import React from 'react';
 import { 
   ShieldCheck, Sun, Moon, Search, FileText, History, 
-  Building2, Command, ChevronDown, Menu, X, Database, BookOpen 
+  Building2, Command, ChevronDown, Menu, X 
 } from 'lucide-react';
 
 const NAV_ITEMS = [
   { id: 'workspace', label: 'Verify', icon: Search },
-  { id: 'factchecks', label: 'Fact-Checks', icon: Database },
-  { id: 'methodology', label: 'Viva & Methodology', icon: BookOpen },
   { id: 'history', label: 'Investigations', icon: History },
   { id: 'report', label: 'Audit Report', icon: FileText },
 ];

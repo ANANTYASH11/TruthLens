@@ -4,8 +4,6 @@ import LandingPage from './components/LandingPage';
 import VerificationWorkspace from './components/VerificationWorkspace';
 import AnalysisPipeline from './components/AnalysisPipeline';
 import ResultsDashboard from './components/ResultsDashboard';
-import FactCheckExplorer from './components/FactCheckExplorer';
-import MethodologyGuide from './components/MethodologyGuide';
 import EvidencePanel from './components/EvidencePanel';
 import ClaimBreakdown from './components/ClaimBreakdown';
 import DeepfakeAnalysis from './components/DeepfakeAnalysis';
@@ -151,16 +149,6 @@ export default function App() {
     setCurrentView('results');
   };
 
-  const handleSelectFromExplorer = (claimItem) => {
-    setActiveAnalysisInput({
-      mode: 'multimodal',
-      text: claimItem.claim,
-      file: 'demo_sample.mp4',
-      language: claimItem.language
-    });
-    setCurrentView('workspace');
-  };
-
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg-body)' }}>
       
@@ -200,16 +188,6 @@ export default function App() {
             onDownloadReport={() => setCurrentView('report')}
             onNewScan={() => setCurrentView('workspace')}
           />
-        )}
-
-        {currentView === 'factchecks' && (
-          <FactCheckExplorer 
-            onSelectClaim={handleSelectFromExplorer}
-          />
-        )}
-
-        {currentView === 'methodology' && (
-          <MethodologyGuide />
         )}
 
         {currentView === 'history' && (
@@ -271,16 +249,16 @@ export default function App() {
 
           <div style={{ display: 'flex', gap: '16px' }}>
             <button 
-              onClick={() => setCurrentView('methodology')} 
+              onClick={() => setCurrentView('workspace')} 
               style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: '12px' }}
             >
-              Viva & Methodology
+              Verify
             </button>
             <button 
-              onClick={() => setCurrentView('factchecks')} 
+              onClick={() => setCurrentView('history')} 
               style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: '12px' }}
             >
-              Fact-Check Database
+              Investigations
             </button>
             <button 
               onClick={() => setShowSettings(true)} 
